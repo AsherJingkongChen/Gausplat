@@ -1,0 +1,7 @@
+edition = "2021"
+fn_params_layout = "Vertical"
+match_block_trailing_comma = true
+max_width = 80
+newline_style = "Unix"
+use_field_init_shorthand = true
+use_try_shorthand = true
