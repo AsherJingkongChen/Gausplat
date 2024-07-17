@@ -1,3 +1,3 @@
 # Gausplat
 
-> A library for novel view-synthesis inspired by the concepts of 3D Gaussian splatting.
+> A library for novel view-synthesis inspired by the concepts of Gaussian splatting
