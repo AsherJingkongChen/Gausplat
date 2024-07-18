@@ -18,7 +18,7 @@ anyhow = {version = "1.0.86", default-features = false, features = ["std"]}
 burn = {version = "0.13.2", default-features = false}
 bytemuck = {version = "1.16.1", default-features = false}
 dashmap = {version = "6.0.1", default-features = false, features = ["rayon"]}
-image = {version = "0.25.1", default-features = false}
+image = {version = "0.25.1", default-features = false, features = ["rayon"]}
 rayon = {version = "1.10.0", default-features = false}
 
 [profile.dev]
