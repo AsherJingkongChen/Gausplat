@@ -10,6 +10,10 @@ edition = "2021"
 version = "0.0.0"
 
 [workspace.dependencies]
+gausplat-importer = {path = "crates/gausplat-importer"}
+gausplat-renderer = {path = "crates/gausplat-renderer"}
+gausplat-trainer = {path = "crates/gausplat-trainer"}
+
 anyhow = {version = "1.0.86", default-features = false, features = ["std"]}
 burn = {version = "0.13.2", default-features = false}
 bytemuck = {version = "1.16.1", default-features = false}

@@ -265,8 +265,6 @@ name = "dev-1"
 version = "0.0.0"
 dependencies = [
  "anyhow",
- "gausplat-importer",
- "image",
 ]
 
 [[package]]
@@ -314,6 +312,11 @@ dependencies = [
 [[package]]
 name = "gausplat-trainer"
 version = "0.0.0"
+dependencies = [
+ "burn",
+ "gausplat-importer",
+ "gausplat-renderer",
+]
 
 [[package]]
 name = "getrandom"
