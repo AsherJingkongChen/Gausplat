@@ -1,3 +1,7 @@
 [submodule "gausplat-importer"]
     path = crates/gausplat-importer
     url = https://github.com/AsherJingkongChen/gausplat-importer
+
+[submodule "gausplat-renderer"]
+	path = crates/gausplat-renderer
+	url = https://github.com/AsherJingkongChen/gausplat-renderer
