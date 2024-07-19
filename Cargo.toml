@@ -15,7 +15,7 @@ gausplat-renderer = {path = "crates/gausplat-renderer"}
 gausplat-trainer = {path = "crates/gausplat-trainer"}
 
 anyhow = {version = "1.0.86", default-features = false, features = ["std"]}
-burn = {version = "0.13.2", default-features = false}
+burn = {version = "0.13.2", default-features = false, features = ["std"]}
 bytemuck = {version = "1.16.1", default-features = false}
 dashmap = {version = "6.0.1", default-features = false, features = ["rayon"]}
 image = {version = "0.25.1", default-features = false, features = ["rayon"]}

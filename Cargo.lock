@@ -765,7 +765,9 @@ name = "dev-1"
 version = "0.0.0"
 dependencies = [
  "anyhow",
+ "burn",
  "gausplat-renderer",
+ "gausplat-trainer",
 ]
 
 [[package]]
