@@ -765,6 +765,7 @@ name = "dev-1"
 version = "0.0.0"
 dependencies = [
  "anyhow",
+ "gausplat-renderer",
 ]
 
 [[package]]
@@ -982,6 +983,7 @@ name = "gausplat-renderer"
 version = "0.0.0"
 dependencies = [
  "burn",
+ "lazy_static",
 ]
 
 [[package]]
