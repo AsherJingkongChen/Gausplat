@@ -3,9 +3,9 @@
     url = https://github.com/AsherJingkongChen/gausplat-importer
 
 [submodule "gausplat-renderer"]
-	path = crates/gausplat-renderer
-	url = https://github.com/AsherJingkongChen/gausplat-renderer
+    path = crates/gausplat-renderer
+    url = https://github.com/AsherJingkongChen/gausplat-renderer
 
 [submodule "gausplat-trainer"]
-	path = crates/gausplat-trainer
-	url = https://github.com/AsherJingkongChen/gausplat-trainer
+    path = crates/gausplat-trainer
+    url = https://github.com/AsherJingkongChen/gausplat-trainer
