@@ -16,11 +16,13 @@ gausplat-trainer = {path = "crates/gausplat-trainer"}
 
 anyhow = {version = "1.0.86", default-features = false}
 burn = {version = "0.14.0", default-features = false}
+burn-tensor = {version = "0.14.0", default-features = false}
 bytemuck = {version = "1.17.0", default-features = false}
 cubecl = {version = "0.2.0", default-features = false}
 dashmap = {version = "6.0.1", default-features = false}
 image = {version = "0.25.2", default-features = false}
 lazy_static = {version = "1.5.0", default-features = false}
+log = {version = "0.4.22", default-features = false}
 pretty_env_logger = {version = "0.5.0", default-features = false}
 rand = {version = "0.8.5", default-features = false}
 rand_distr = {version = "0.4.3", default-features = false}

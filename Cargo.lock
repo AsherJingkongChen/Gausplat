@@ -1102,6 +1102,7 @@ dependencies = [
  "gausplat-renderer",
  "gausplat-trainer",
  "image",
+ "log",
  "pretty_env_logger",
  "rayon",
 ]
@@ -1375,9 +1376,11 @@ checksum = "9fb8e00e87438d937621c1c6269e53f536c14d3fbd6a042bb24879e57d474fb5"
 name = "gausplat-importer"
 version = "0.0.0"
 dependencies = [
+ "burn-tensor",
  "bytemuck",
  "dashmap",
  "image",
+ "log",
  "rayon",
  "thiserror",
 ]
@@ -1391,6 +1394,7 @@ dependencies = [
  "cubecl",
  "gausplat-importer",
  "lazy_static",
+ "log",
  "rand",
  "rand_distr",
  "rayon",
@@ -1404,6 +1408,7 @@ dependencies = [
  "burn",
  "gausplat-importer",
  "gausplat-renderer",
+ "log",
  "rayon",
  "thiserror",
 ]
