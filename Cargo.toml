@@ -21,13 +21,14 @@ cubecl = {version = "0.2.0", default-features = false}
 dashmap = {version = "6.0.1", default-features = false}
 image = {version = "0.25.2", default-features = false}
 lazy_static = {version = "1.5.0", default-features = false}
+pretty_env_logger = {version = "0.5.0", default-features = false}
 rand = {version = "0.8.5", default-features = false}
 rand_distr = {version = "0.4.3", default-features = false}
 rayon = {version = "1.10.0", default-features = false}
 thiserror = {version = "1.0.63", default-features = false}
 
 [patch.crates-io]
-naga = {git = "https://github.com/AsherJingkongChen/wgpu.git", rev = "13700d630b532f63b72e7147bf54e5c3fc40567c"}
+naga = {git = "https://github.com/AsherJingkongChen/wgpu.git", rev = "d917af8569849740e1f4815efe27c15966d35582"}
 
 [profile.dev]
 opt-level = 1
