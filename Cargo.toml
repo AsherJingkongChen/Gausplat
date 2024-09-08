@@ -15,13 +15,15 @@ gausplat-renderer = {path = "crates/gausplat-renderer"}
 gausplat-trainer = {path = "crates/gausplat-trainer"}
 
 anyhow = {version = "1.0.86", default-features = false}
-burn = {version = "0.14.0", default-features = false}
-burn-tensor = {version = "0.14.0", default-features = false}
+burn = {git = "https://github.com/tracel-ai/burn.git", rev = "a567c6e888e9c0f71a884a8f90e84f40f303149d", default-features = false}
+burn-tensor = {git = "https://github.com/tracel-ai/burn.git", rev = "a567c6e888e9c0f71a884a8f90e84f40f303149d", default-features = false}
 bytemuck = {version = "1.17.0", default-features = false}
-cubecl = {version = "0.2.0", default-features = false}
+cubecl = {git = "https://github.com/tracel-ai/cubecl.git", rev = "b009bcc2ac97ca0d46d9990d5681081f1ebc09cd", default-features = false}
 dashmap = {version = "6.0.1", default-features = false}
+humansize = {version = "2.1.3", default-features = false}
 image = {version = "0.25.2", default-features = false}
 indexmap = {version = "2.5.0", default-features = false}
+kdam = {version = "0.5.2", default-features = false}
 lazy_static = {version = "1.5.0", default-features = false}
 log = {version = "0.4.22", default-features = false}
 pretty_env_logger = {version = "0.5.0", default-features = false}
@@ -31,7 +33,7 @@ rayon = {version = "1.10.0", default-features = false}
 thiserror = {version = "1.0.63", default-features = false}
 
 [patch.crates-io]
-naga = {git = "https://github.com/AsherJingkongChen/wgpu.git", rev = "d917af8569849740e1f4815efe27c15966d35582"}
+wgpu = {git = "https://github.com/AsherJingkongChen/wgpu.git", rev = "69a970ed4e7d2a4d72493e046ab6b3c456986d38"}
 
 [profile.dev]
 opt-level = 1
