@@ -34,7 +34,7 @@ rayon = {version = "1.10.0", default-features = false}
 thiserror = {version = "1.0.64", default-features = false}
 
 [patch.crates-io]
-wgpu = {git = "https://github.com/AsherJingkongChen/wgpu", rev = "a5652bd47759ccfb861f9d70fe3e0d3a132f327a"}
+wgpu = {git = "https://github.com/AsherJingkongChen/wgpu", rev = "a8073bb507c334b9f3ddea068d922c3896b56d60"}
 
 [profile.dev]
 opt-level = 0
