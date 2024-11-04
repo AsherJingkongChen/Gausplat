@@ -7,6 +7,7 @@ resolver = "2"
 
 [workspace.package]
 edition = "2021"
+rust-version = "1.81.0"
 version = "0.0.0"
 
 [workspace.dependencies]
@@ -14,14 +15,14 @@ gausplat-loader = {path = "crates/gausplat-loader"}
 gausplat-renderer = {path = "crates/gausplat-renderer"}
 gausplat-trainer = {path = "crates/gausplat-trainer"}
 
-anyhow = {version = "1.0.89", default-features = false}
-burn = {git = "https://github.com/tracel-ai/burn", rev = "b9cb9bfb0ff67f4d823a026e4dc9a2a4f4a8ec53", default-features = false}
-burn-jit = {git = "https://github.com/tracel-ai/burn", rev = "b9cb9bfb0ff67f4d823a026e4dc9a2a4f4a8ec53", default-features = false}
-burn-ndarray = {git = "https://github.com/tracel-ai/burn", rev = "b9cb9bfb0ff67f4d823a026e4dc9a2a4f4a8ec53", default-features = false}
-burn-tensor = {git = "https://github.com/tracel-ai/burn", rev = "b9cb9bfb0ff67f4d823a026e4dc9a2a4f4a8ec53", default-features = false}
+anyhow = {version = "1.0.92", default-features = false}
+burn = {git = "https://github.com/tracel-ai/burn", rev = "9eb25780aef28be259add4f794e3df0e64942b87", default-features = false}
+burn-jit = {git = "https://github.com/tracel-ai/burn", rev = "9eb25780aef28be259add4f794e3df0e64942b87", default-features = false}
+burn-ndarray = {git = "https://github.com/tracel-ai/burn", rev = "9eb25780aef28be259add4f794e3df0e64942b87", default-features = false}
+burn-tensor = {git = "https://github.com/tracel-ai/burn", rev = "9eb25780aef28be259add4f794e3df0e64942b87", default-features = false}
 bytemuck = {version = "1.19.0", default-features = false}
 dashmap = {version = "6.0.1", default-features = false}
-divan = {version = "0.1.14", default-features = false}
+divan = {version = "0.1.15", default-features = false}
 humansize = {version = "2.1.3", default-features = false}
 image = {version = "0.25.2", default-features = false}
 indexmap = {version = "2.5.0", default-features = false}
@@ -32,13 +33,13 @@ pretty_env_logger = {version = "0.5.0", default-features = false}
 rand = {version = "0.8.5", default-features = false}
 rand_distr = {version = "0.4.3", default-features = false}
 rayon = {version = "1.10.0", default-features = false}
-thiserror = {version = "1.0.64", default-features = false}
+thiserror = {version = "1.0.67", default-features = false}
 
 [patch.crates-io]
 wgpu = {git = "https://github.com/AsherJingkongChen/wgpu", rev = "a8073bb507c334b9f3ddea068d922c3896b56d60"}
 
 [profile.dev]
-opt-level = 0
+opt-level = 1
 
 [profile.release]
 opt-level = 3
