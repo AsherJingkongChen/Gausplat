@@ -16,7 +16,6 @@ gausplat-renderer = {path = "crates/gausplat-renderer"}
 gausplat-trainer = {path = "crates/gausplat-trainer"}
 
 anyhow = {version = "1.0.92", default-features = false}
-ascii = {version = "1.1.0", default-features = false}
 burn = {git = "https://github.com/tracel-ai/burn", rev = "fb05a55d71e063b72eabe35d5c7b703be190d420", default-features = false}
 burn-jit = {git = "https://github.com/tracel-ai/burn", rev = "fb05a55d71e063b72eabe35d5c7b703be190d420", default-features = false}
 burn-ndarray = {git = "https://github.com/tracel-ai/burn", rev = "fb05a55d71e063b72eabe35d5c7b703be190d420", default-features = false}
@@ -24,6 +23,7 @@ burn-tensor = {git = "https://github.com/tracel-ai/burn", rev = "fb05a55d71e063b
 bytemuck = {version = "1.19.0", default-features = false}
 byteorder = {version = "1.5.0", default-features = false}
 dashmap = {version = "6.0.1", default-features = false}
+derive_more = {version = "1.0.0", default-features = false}
 divan = {version = "0.1.15", default-features = false}
 globset = {version = "0.4.15", default-features = false}
 humansize = {version = "2.1.3", default-features = false}
@@ -32,6 +32,7 @@ indexmap = {version = "2.5.0", default-features = false}
 kdam = {version = "0.5.2", default-features = false}
 lazy_static = {version = "1.5.0", default-features = false}
 log = {version = "0.4.22", default-features = false}
+ply-rs = {version = "0.1.3", default-features = false}
 paste = {version = "1.0.15", default-features = false}
 pretty_env_logger = {version = "0.5.0", default-features = false}
 rand = {version = "0.8.5", default-features = false}
