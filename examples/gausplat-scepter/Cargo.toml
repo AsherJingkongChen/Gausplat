@@ -1,0 +1,24 @@
+[package]
+authors.workspace = true
+description = "A tool to run tasks for `gausplat`"
+edition.workspace = true
+license-file = "LICENSE"
+name = "gausplat-scepter"
+publish = false
+readme = "README.md"
+version.workspace = true
+
+[dependencies]
+gausplat-loader = {workspace = true}
+gausplat-renderer = {workspace = true}
+gausplat-trainer = {workspace = true}
+
+burn = {workspace = true}
+clap = {workspace = true, features = ["default", "derive"]}
+color-eyre = {workspace = true}
+kdam = {workspace = true, features = ["rayon", "template", "unicode"]}
+log = {workspace = true}
+pretty_env_logger = {workspace = true}
+rayon = {workspace = true}
+serde = {workspace = true, features = ["default", "derive"]}
+serde_json = {workspace = true, features = ["default"]}

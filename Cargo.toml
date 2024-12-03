@@ -7,20 +7,22 @@ resolver = "2"
 
 [workspace.package]
 edition = "2021"
-rust-version = "1.81.0"
-version = "0.0.0"
+rust-version = "1.83.0"
+version = "0.0.0+alpha"
+authors = ["AsherJingkongChen"]
 
 [workspace.dependencies]
 gausplat-loader = {path = "crates/gausplat-loader"}
 gausplat-renderer = {path = "crates/gausplat-renderer"}
 gausplat-trainer = {path = "crates/gausplat-trainer"}
 
-burn = {git = "https://github.com/tracel-ai/burn", rev = "fe3e43ac2b308d03c4e7d90c62a3deee038efd6d", default-features = false}
-burn-jit = {git = "https://github.com/tracel-ai/burn", rev = "fe3e43ac2b308d03c4e7d90c62a3deee038efd6d", default-features = false}
-burn-ndarray = {git = "https://github.com/tracel-ai/burn", rev = "fe3e43ac2b308d03c4e7d90c62a3deee038efd6d", default-features = false}
-burn-tensor = {git = "https://github.com/tracel-ai/burn", rev = "fe3e43ac2b308d03c4e7d90c62a3deee038efd6d", default-features = false}
+burn = {git = "https://github.com/tracel-ai/burn", rev = "3dc4b43e92ec5683ca39c194acf274b131d44dfa", default-features = false}
+burn-jit = {git = "https://github.com/tracel-ai/burn", rev = "3dc4b43e92ec5683ca39c194acf274b131d44dfa", default-features = false}
+burn-ndarray = {git = "https://github.com/tracel-ai/burn", rev = "3dc4b43e92ec5683ca39c194acf274b131d44dfa", default-features = false}
+burn-tensor = {git = "https://github.com/tracel-ai/burn", rev = "3dc4b43e92ec5683ca39c194acf274b131d44dfa", default-features = false}
 bytemuck = {version = "1.20.0", default-features = false}
 byteorder = {version = "1.5.0", default-features = false}
+clap = {version = "4.5.21", default-features = false}
 color-eyre = {version = "0.6.3", default-features = false}
 dashmap = {version = "6.0.1", default-features = false}
 derive_more = {version = "1.0.0", default-features = false}
@@ -38,6 +40,8 @@ pretty_env_logger = {version = "0.5.0", default-features = false}
 rand = {version = "0.8.5", default-features = false}
 rand_distr = {version = "0.4.3", default-features = false}
 rayon = {version = "1.10.0", default-features = false}
+serde = {version = "1.0.215", default-features = false}
+serde_json = {version = "1.0.133", default-features = false}
 thiserror = {version = "1.0.67", default-features = false}
 walkdir = {version = "2.5.0", default-features = false}
 
