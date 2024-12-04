@@ -28,7 +28,7 @@ pub fn main() -> Result<(), Report> {
     match &args.model {
         Gaussian3d(command) => {
             use Gaussian3dModelCommand::*;
-            match command {
+            match command.as_ref() {
                 Train(args_train) => {
                     args.save(&args_train.common_arguments.model_path, "args-train")?;
                     let runner = args_train.init()?;

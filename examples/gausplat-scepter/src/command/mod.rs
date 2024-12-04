@@ -61,7 +61,7 @@ pub enum ModelCommand {
     #[command(verbatim_doc_comment, rename_all = "kebab-case", after_help = AFTER_HELP)]
     #[command(subcommand, name = "3dgs")]
     #[serde(rename = "3dgs")]
-    Gaussian3d(Gaussian3dModelCommand),
+    Gaussian3d(Box<Gaussian3dModelCommand>),
 }
 
 impl GausplatArguments {
