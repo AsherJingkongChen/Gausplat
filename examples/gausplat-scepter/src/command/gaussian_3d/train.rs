@@ -107,7 +107,7 @@ pub struct TrainArguments {
     #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
     #[arg(
         long, value_name = "F64",
-        default_value_t = REFINER_CONFIG.threshold_scaling / 4.0,
+        default_value_t = REFINER_CONFIG.threshold_scaling / 6.0,
     )]
     pub percent_dense: f64,
 
@@ -131,7 +131,16 @@ pub struct TrainArguments {
     )]
     pub densification_interval: u64,
 
-    // TODO: `opacity_reset_interval`. We require more tests for opacity resetting.
+    /// Number of iterations between resetting opacities.
+    /// It may affect the model size.
+    /// No reset will be performed at and after the 'densify_until_iter'.
+    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(
+        long, value_name = "U64",
+        default_value_t = REFINER_CONFIG.range_resetting_opacities.step,
+    )]
+    pub opacity_reset_interval: u64,
+
     /// The start iteration for densification.
     /// It should not be too small.
     #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
@@ -176,16 +185,6 @@ pub struct TrainArguments {
             REFINER_CONFIG.range_increasing_colors_sh_degree_max.start,
     )]
     pub increase_sh_degree_from_iter: u64,
-
-    /// The final iteration for increasing color SH feature degree by one.
-    /// No action will be performed at and after this iteration.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
-    #[arg(
-        long, value_name = "U64",
-        default_value_t =
-            REFINER_CONFIG.range_increasing_colors_sh_degree_max.end,
-    )]
-    pub increase_sh_degree_until_iter: u64,
 }
 
 /// [`Gaussian3dTrainerConfig::default()`]

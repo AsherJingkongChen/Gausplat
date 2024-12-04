@@ -2,6 +2,7 @@ pub use super::*;
 pub use command::gaussian_3d::TrainArguments;
 pub use gausplat_trainer::train::gaussian_3d::Gaussian3dTrainerConfig;
 
+use gausplat_renderer::spherical_harmonics::SH_DEGREE_MAX;
 use gausplat_trainer::{
     metric::{Metric, Psnr},
     optimize::LearningRateConfig,
@@ -204,6 +205,10 @@ impl fmt::Debug for TrainRunner {
 
 impl From<&TrainArguments> for Gaussian3dTrainerConfig {
     fn from(arguments: &TrainArguments) -> Self {
+        let arguments_increasing_sh_degree_until_iter = arguments
+            .increase_sh_degree_from_iter
+            + arguments.increase_sh_degree_interval * SH_DEGREE_MAX as u64;
+
         Self::new()
             .with_learning_rate_colors_sh(LearningRateConfig::new(arguments.feature_lr))
             .with_learning_rate_opacities(LearningRateConfig::new(arguments.opacity_lr))
@@ -228,15 +233,20 @@ impl From<&TrainArguments> for Gaussian3dTrainerConfig {
                         arguments.densify_until_iter,
                         arguments.densification_interval,
                     ))
+                    .with_range_increasing_colors_sh_degree_max(RangeOptions::new(
+                        arguments.increase_sh_degree_from_iter,
+                        arguments_increasing_sh_degree_until_iter,
+                        arguments.increase_sh_degree_interval,
+                    ))
+                    .with_range_resetting_opacities(RangeOptions::new(
+                        arguments.opacity_reset_interval,
+                        arguments.densify_until_iter,
+                        arguments.opacity_reset_interval,
+                    ))
                     .with_threshold_position_2d_grad_norm(
                         arguments.densify_grad_threshold,
                     )
-                    .with_threshold_scaling(arguments.percent_dense * 4.0)
-                    .with_range_increasing_colors_sh_degree_max(RangeOptions::new(
-                        arguments.increase_sh_degree_from_iter,
-                        arguments.increase_sh_degree_until_iter,
-                        arguments.increase_sh_degree_interval,
-                    )),
+                    .with_threshold_scaling(arguments.percent_dense * 6.0),
             )
     }
 }

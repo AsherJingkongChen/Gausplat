@@ -44,7 +44,7 @@ pub fn main() -> Result<(), Report> {
                 Eval(_args_eval) => unimplemented!(),
             }
         },
-        _ => unimplemented!(),
+        Run { .. } => unreachable!(),
     };
     log::info!(target: "gausplat::scepter::main", "run in {:.02?}", time.elapsed());
 
