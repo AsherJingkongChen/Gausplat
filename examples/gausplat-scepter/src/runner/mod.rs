@@ -4,6 +4,13 @@ pub use super::*;
 pub use color_eyre::Report;
 pub use kdam::{Bar, BarBuilder, BarExt};
 
+use std::fmt::Debug;
+
+/// Task runner.
+pub trait Runner: Debug {
+    fn run(self) -> Result<(), Report>;
+}
+
 pub fn get_bar() -> Bar {
     // NOTE: The bar format is correct.
     let bar = kdam::BarBuilder::default()

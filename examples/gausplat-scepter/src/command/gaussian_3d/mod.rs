@@ -77,7 +77,7 @@ pub struct Gaussian3dCommonArguments {
 #[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize, ValueEnum)]
 #[value(verbatim_doc_comment, rename_all = "kebab-case")]
 pub enum SourceType {
-    /// The dataset built using COLMAP.
+    /// The dataset is built from COLMAP.
     /// It generally includes the following files:
     ///     1. sparse/0/cameras.bin
     ///     2. sparse/0/images.bin

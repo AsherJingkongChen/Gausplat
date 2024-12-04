@@ -50,108 +50,6 @@ impl TrainArguments {
 }
 
 impl TrainRunner {
-    pub fn run(mut self) -> Result<(), Report> {
-        // TODO: RZC
-        // - RZC_?
-
-        // Specifying the parameters
-
-        let device = self.scene.device();
-        let iterations = self.arguments.iterations as usize;
-
-        let mut iterations_test_reversed = self.arguments.test_iterations.to_owned();
-        iterations_test_reversed.sort_unstable_by(|a, b| b.cmp(a));
-        let mut iterations_save_reversed = self.arguments.save_iterations.to_owned();
-        iterations_save_reversed.sort_unstable_by(|a, b| b.cmp(a));
-
-        let metric_psnr = Psnr::init(&device);
-        let range_detail_update = RangeOptions::default_with_step(
-            2 * 100.max(self.trainer.refiner.config.range_densification.step),
-        );
-        let quiet = self.arguments.common_arguments.quiet;
-
-        // Specifying the progress bar
-
-        let mut bar = get_bar();
-        let mut psnr = 0.0;
-        let mut size = "0.0 B".to_string();
-        bar.colour = Some("ansi(41)".into());
-        bar.desc = "| Training 3DGS".into();
-        bar.disable = quiet > 1;
-        if quiet < 1 {
-            bar.postfix = format!(" {size} | PSNR {psnr:.2} dB |");
-        }
-        bar.total = iterations;
-
-        // Optimizing the scene iteratively
-
-        self.cameras_train
-            .seed(SEED)
-            .random_values()
-            .take(iterations)
-            .try_for_each(|camera| {
-                self.trainer.train(&mut self.scene, camera)?;
-                let iteration = self.trainer.iteration;
-                bar.update(1)?;
-
-                // Updating the progress details
-                if quiet < 1 && range_detail_update.has(iteration) {
-                    let scene = self.scene.valid();
-                    let output = scene
-                        .render(&camera.view, &self.trainer.options_renderer)?
-                        .colors_rgb_2d;
-                    let target = camera.image.decode_rgb_tensor(&device)?;
-                    psnr = metric_psnr.evaluate(output, target).into_scalar();
-                    size = self.scene.size_readable();
-
-                    bar.postfix = format!(" {size} | PSNR {psnr:.2} dB |");
-                    bar.refresh()?;
-                }
-
-                // Testing the model
-                if quiet < 1 && Some(&iteration) == iterations_test_reversed.last() {
-                    iterations_test_reversed.pop();
-
-                    let time = std::time::Instant::now();
-                    let (mssim, psnr) = get_mssim_and_psnr(
-                        &self.cameras_test,
-                        &self.trainer.options_renderer,
-                        &self.scene.valid(),
-                    )?;
-                    eprintln!("time: {:?}", time.elapsed());
-
-                    bar.refresh()?;
-                    eprintln!(
-                        "|  Testing 3DGS | {size} | \
-                        PSNR {psnr:.2} dB | SSIM {mssim:.3} |"
-                    );
-                }
-
-                // Saving the model
-                if Some(&iteration) == iterations_save_reversed.last() {
-                    iterations_save_reversed.pop();
-
-                    let model_path = &self.arguments.common_arguments.model_path;
-                    Self::save_model(iteration, model_path, &self.scene.valid())?;
-                    size = self.scene.size_readable();
-
-                    bar.refresh()?;
-                    eprintln!("|   Saving 3DGS | {size} |");
-                }
-
-                Ok::<_, Report>(())
-            })?;
-
-        if !bar.disable {
-            if bar.should_refresh() {
-                bar.refresh()?;
-            }
-            eprintln!();
-        }
-
-        Ok(())
-    }
-
     pub fn save_model(
         iteration: u64,
         model_path: impl AsRef<Path>,
@@ -170,6 +68,121 @@ impl TrainRunner {
         scene.encode_polygon(File::open(&model_file_path)?.truncate()?)?;
 
         Ok(model_file_path)
+    }
+}
+
+impl Runner for TrainRunner {
+    fn run(mut self) -> Result<(), Report> {
+        // TODO: RZC
+        // - RZC_?
+
+        // Specifying the parameters
+
+        let device = self.scene.device();
+        let iterations = self.arguments.iterations as usize;
+
+        let mut iterations_test_reversed = self.arguments.test_iterations.to_owned();
+        iterations_test_reversed.sort_unstable_by(|a, b| b.cmp(a));
+        let mut iterations_save_reversed = self.arguments.save_iterations.to_owned();
+        iterations_save_reversed.sort_unstable_by(|a, b| b.cmp(a));
+
+        let metric_psnr = Psnr::init(&device);
+        let range_detail_update = self.trainer.refiner.config.range_densification;
+        let quiet = self.arguments.common_arguments.quiet;
+
+        let can_show_details = quiet < 1;
+        let can_show_test = quiet < 2;
+        let can_show_save = quiet < 3;
+
+        // Specifying the progress bar
+
+        let mut bar = get_bar();
+        let mut psnr = 0.0;
+        let mut size = "0.0 B".to_string();
+        bar.colour = Some("ansi(41)".into());
+        bar.desc = "| Training 3DGS".into();
+        bar.disable = quiet > 1;
+        bar.total = iterations;
+        if can_show_details {
+            bar.postfix = format!(" {size} | PSNR {psnr:.2} dB |");
+        }
+
+        // Optimizing the scene iteratively
+
+        self.cameras_train
+            .seed(SEED)
+            .random_values()
+            .take(iterations)
+            .try_for_each(|camera| {
+                self.trainer.train(&mut self.scene, camera)?;
+                bar.update(1)?;
+
+                // Specifying the parameters
+                let iteration = self.trainer.iteration;
+                if can_show_save {
+                    size = self.scene.size_readable();
+                }
+
+                // Updating the progress details
+                if can_show_details && range_detail_update.has(iteration) {
+                    let scene = self.scene.valid();
+                    let output = scene
+                        .render(&camera.view, &self.trainer.options_renderer)?
+                        .colors_rgb_2d;
+                    let target = camera.image.decode_rgb_tensor(&device)?;
+                    psnr = metric_psnr.evaluate(output, target).into_scalar();
+                    bar.postfix = format!(" {size} | PSNR {psnr:.2} dB |");
+                    if !bar.disable {
+                        bar.refresh()?;
+                    }
+                }
+
+                // NOTE: The progress should be shown only once.
+                let mut should_show_progress = true;
+
+                // Testing the model
+                if can_show_test && Some(&iteration) == iterations_test_reversed.last() {
+                    iterations_test_reversed.pop();
+
+                    let (mssim, psnr) = get_mssim_and_psnr(
+                        &self.cameras_test,
+                        &self.trainer.options_renderer,
+                        &self.scene.valid(),
+                    )?;
+
+                    if should_show_progress {
+                        should_show_progress = false;
+                        bar.refresh()?;
+                    }
+                    eprintln!(
+                        "|  Testing 3DGS | {size} | \
+                        PSNR {psnr:.2} dB | SSIM {mssim:.3} |"
+                    );
+                }
+
+                // Saving the model
+                if Some(&iteration) == iterations_save_reversed.last() {
+                    iterations_save_reversed.pop();
+
+                    let model_path = &self.arguments.common_arguments.model_path;
+                    Self::save_model(iteration, model_path, &self.scene.valid())?;
+
+                    if can_show_save {
+                        if should_show_progress {
+                            bar.refresh()?;
+                        }
+                        eprintln!("|   Saving 3DGS | {size} |");
+                    }
+                }
+
+                Ok::<_, Report>(())
+            })?;
+
+        if !bar.disable {
+            eprintln!();
+        }
+
+        Ok(())
     }
 }
 

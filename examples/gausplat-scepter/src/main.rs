@@ -1,5 +1,6 @@
-use gausplat_scepter::command::{
-    GausplatArguments, Gaussian3dModelCommand, ModelCommand, Report,
+pub use gausplat_scepter::{
+    command::{GausplatArguments, Gaussian3dModelCommand, ModelCommand, Report},
+    runner::Runner,
 };
 
 pub fn main() -> Result<(), Report> {
@@ -13,8 +14,14 @@ pub fn main() -> Result<(), Report> {
         _ => args,
     };
 
-    #[cfg(all(debug_assertions, not(test)))]
-    log::debug!(target: "gausplat-scepter::main", "args > {args:#?}");
+    log::debug!(target: "gausplat::scepter::main", "args > {args:#?}");
+
+    let time_run = std::time::Instant::now();
+    let log_runner = |runner: &dyn Runner| {
+        let time = time_run.elapsed();
+        log::debug!(target: "gausplat::scepter::main", "runner > {runner:#?}");
+        log::info!(target: "gausplat::scepter::main", "run after {time:.03?}");
+    };
 
     match &args.model {
         Gaussian3d(command) => {
@@ -23,28 +30,20 @@ pub fn main() -> Result<(), Report> {
                 Train(args_train) => {
                     args.save(&args_train.common_arguments.model_path, "args-train")?;
                     let runner = args_train.init()?;
-
-                    // TODO: DRY: Runner::run
-
-                    #[cfg(all(debug_assertions, not(test)))]
-                    log::debug!(target: "gausplat::scepter::main", "runner > {runner:#?}");
-
+                    log_runner(&runner);
                     runner.run()?;
                 },
                 Render(args_render) => {
                     args.save(&args_render.common_arguments.model_path, "args-render")?;
                     let runner = args_render.init()?;
-
-                    #[cfg(all(debug_assertions, not(test)))]
-                    log::debug!(target: "gausplat::scepter::main", "runner > {runner:#?}");
-
+                    log_runner(&runner);
                     runner.run()?;
                 },
                 Eval(_args_eval) => unimplemented!(),
             }
         },
-        _ => {},
-    }
+        _ => unimplemented!(),
+    };
 
     Ok(())
 }

@@ -3,9 +3,7 @@ pub use command::gaussian_3d::RenderArguments;
 pub use gausplat_loader::source::image::Image;
 
 use color_eyre::eyre::eyre;
-use rayon::iter::{IndexedParallelIterator, IntoParallelIterator, ParallelIterator};
 use std::{
-    convert::identity,
     fmt, fs,
     path::{Path, PathBuf},
 };
@@ -75,7 +73,38 @@ impl RenderArguments {
 }
 
 impl RenderRunner {
-    pub fn run(mut self) -> Result<(), Report> {
+    #[inline]
+    fn get_image_from_tensor(tensor: Tensor<Wgpu, 3>) -> Image {
+        let mut image = Image {
+            image_file_path: " .png".into(),
+            ..Default::default()
+        };
+        // NOTE: Assume that the tensor is in correct shape.
+        image.encode_rgb_tensor(tensor).unwrap();
+        image
+    }
+
+    #[inline]
+    pub fn make_directory(directory: PathBuf) -> Result<PathBuf, Report> {
+        fs::remove_dir_all(&directory).or_else(|_| fs::create_dir_all(&directory))?;
+        fs::create_dir_all(&directory)?;
+        Ok(directory)
+    }
+
+    #[inline]
+    pub fn save_image(
+        directory: impl AsRef<Path>,
+        index: usize,
+        mut image: Image,
+    ) -> Result<(), Report> {
+        image.image_file_path = directory.as_ref().join(format!("{index:05}.png"));
+        image.save()?;
+        Ok(())
+    }
+}
+
+impl Runner for RenderRunner {
+    fn run(mut self) -> Result<(), Report> {
         // Specifying the parameters
 
         let iteration = self.iteration;
@@ -98,6 +127,13 @@ impl RenderRunner {
         .into_iter()
         .collect::<PathBuf>();
 
+        // Specifying the directories
+
+        let dir_test_rendered = Self::make_directory(directory_test.join("renders"))?;
+        let dir_test_true = Self::make_directory(directory_test.join("gt"))?;
+        let dir_train_rendered = Self::make_directory(directory_train.join("renders"))?;
+        let dir_train_true = Self::make_directory(directory_train.join("gt"))?;
+
         // Skipping the specified target
 
         if self.arguments.skip_test {
@@ -114,119 +150,58 @@ impl RenderRunner {
         let mut bar = get_bar();
         bar.colour = Some("ansi(45)".into());
         bar.desc = "| Painting 3DGS".into();
-        bar.disable = quiet > 0;
+        bar.disable = quiet != 0;
         bar.mininterval = 0.005;
         bar.postfix = format!(" Iteration {iteration} |");
-        bar.total = test_size + train_size;
 
-        // Rendering the images
+        // Rendering and saving the images
 
-        let (images_rgb_test_rendered, images_rgb_test_true) =
-            self.cameras_test.into_iter().try_fold(
-                (Vec::with_capacity(test_size), Vec::with_capacity(test_size)),
-                |(mut images_rgb_rendered, mut images_rgb_true), (_, camera)| {
-                    images_rgb_rendered.push(Self::get_image_from_tensor(
+        bar.total = test_size;
+        self.cameras_test
+            .into_values()
+            .enumerate()
+            .try_for_each(|(index, camera)| {
+                Self::save_image(
+                    &dir_test_rendered,
+                    index,
+                    Self::get_image_from_tensor(
                         self.scene
                             .render(&camera.view, &options_renderer)?
                             .colors_rgb_2d,
-                    ));
-                    images_rgb_true.push(camera.image);
-                    bar.update(1)?;
-                    Ok::<_, Report>((images_rgb_rendered, images_rgb_true))
-                },
-            )?;
-        let (images_rgb_train_rendered, images_rgb_train_true) =
-            self.cameras_train.into_values().try_fold(
-                (
-                    Vec::with_capacity(train_size),
-                    Vec::with_capacity(train_size),
-                ),
-                |(mut images_rgb_rendered, mut images_rgb_true), camera| {
-                    images_rgb_rendered.push(Self::get_image_from_tensor(
-                        self.scene
-                            .render(&camera.view, &options_renderer)?
-                            .colors_rgb_2d,
-                    ));
-                    images_rgb_true.push(camera.image);
-                    bar.update(1)?;
-                    Ok::<_, Report>((images_rgb_rendered, images_rgb_true))
-                },
-            )?;
+                    ),
+                )?;
+                Self::save_image(&dir_test_true, index, camera.image)?;
+                bar.update(1)?;
 
-        if !bar.disable {
-            if bar.should_refresh() {
-                bar.refresh()?;
-            }
+                Ok::<_, Report>(())
+            })?;
+        if !bar.disable && test_size != 0 {
             eprintln!();
         }
 
-        // Specifying the directories
+        bar.total = train_size;
+        self.cameras_train.into_values().enumerate().try_for_each(
+            |(index, camera)| {
+                Self::save_image(
+                    &dir_train_rendered,
+                    index,
+                    Self::get_image_from_tensor(
+                        self.scene
+                            .render(&camera.view, &options_renderer)?
+                            .colors_rgb_2d,
+                    ),
+                )?;
+                Self::save_image(&dir_train_true, index, camera.image)?;
+                bar.update(1)?;
 
-        let dir_test_rendered = Self::make_directory(directory_test.join("renders"))?;
-        let dir_test_true = Self::make_directory(directory_test.join("gt"))?;
-        let dir_train_rendered = Self::make_directory(directory_train.join("renders"))?;
-        let dir_train_true = Self::make_directory(directory_train.join("gt"))?;
-
-        // Saving the images
-
-        rayon::iter::empty()
-            .chain(
-                images_rgb_test_rendered
-                    .into_par_iter()
-                    .enumerate()
-                    .map(Self::get_fn_save_image(dir_test_rendered)),
-            )
-            .chain(
-                images_rgb_test_true
-                    .into_par_iter()
-                    .enumerate()
-                    .map(Self::get_fn_save_image(dir_test_true)),
-            )
-            .chain(
-                images_rgb_train_rendered
-                    .into_par_iter()
-                    .enumerate()
-                    .map(Self::get_fn_save_image(dir_train_rendered)),
-            )
-            .chain(
-                images_rgb_train_true
-                    .into_par_iter()
-                    .enumerate()
-                    .map(Self::get_fn_save_image(dir_train_true)),
-            )
-            .try_for_each(identity)?;
+                Ok::<_, Report>(())
+            },
+        )?;
+        if !bar.disable && train_size != 0 {
+            eprintln!();
+        }
 
         Ok(())
-    }
-
-    #[inline]
-    fn get_fn_save_image(
-        directory: impl AsRef<Path>
-    ) -> impl Fn((usize, Image)) -> Result<(), Report> {
-        move |(index, mut image)| {
-            image.image_file_path = directory.as_ref().join(format!("{index:05}.png"));
-            image.save()?;
-            Ok(())
-        }
-    }
-
-    #[inline]
-    fn get_image_from_tensor(tensor: Tensor<Wgpu, 3>) -> Image {
-        let mut image = Image {
-            image_file_path: " .png".into(),
-            ..Default::default()
-        };
-        // NOTE: Assume that the tensor is in correct shape.
-        image.encode_rgb_tensor(tensor).unwrap();
-        image
-    }
-
-    #[inline]
-    fn make_directory(directory: PathBuf) -> Result<PathBuf, Report> {
-        // NOTE: This error is trivial.
-        fs::remove_dir_all(&directory).ok();
-        fs::create_dir_all(&directory)?;
-        Ok(directory)
     }
 }
 

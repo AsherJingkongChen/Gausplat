@@ -1,8 +1,8 @@
+pub use super::*;
+
 use gausplat_trainer::train::gaussian_3d::Gaussian3dTrainerConfig;
 use gausplat_trainer::train::gaussian_3d::RefinerConfig;
 use std::sync::LazyLock;
-
-pub use super::*;
 
 /// Train for 3D Gaussian Splatting.
 #[derive(Clone, Debug, Deserialize, Parser, PartialEq, Serialize)]
@@ -21,6 +21,7 @@ pub struct TrainArguments {
 
     /// Iterations for testing.
     /// It may take few second to run.
+    /// If '-qq' is set, no test will be performed.
     #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
     #[arg(
         long, value_name = "U64", num_args = 0..,
@@ -30,6 +31,7 @@ pub struct TrainArguments {
 
     /// Iterations for saving.
     /// It may take few second to run.
+    /// If '-qqq' is set, no message will be shown.
     #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
     #[arg(
         long, value_name = "U64", num_args = 0..,

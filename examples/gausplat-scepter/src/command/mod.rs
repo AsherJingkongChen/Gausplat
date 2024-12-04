@@ -64,8 +64,6 @@ pub enum ModelCommand {
     Gaussian3d(Gaussian3dModelCommand),
 }
 
-// TODO: Load arguments from a file.
-
 impl GausplatArguments {
     #[inline]
     pub fn command() -> Command {
