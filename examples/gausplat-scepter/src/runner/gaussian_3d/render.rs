@@ -84,9 +84,13 @@ impl RenderRunner {
         scene: &Gaussian3dScene<Wgpu>,
     ) -> Result<(Vec<Image>, Vec<Image>), Report> {
         let size = cameras.len();
+        let should_show_progress = !bar.disable && size != 0;
 
-        bar.update_to(0)?;
+        bar.counter = 0;
         bar.total = size;
+        if should_show_progress {
+            bar.refresh()?;
+        }
         let images_pair_result = cameras.into_values().try_fold(
             (Vec::with_capacity(size), Vec::with_capacity(size)),
             |mut images, camera| {
@@ -104,10 +108,10 @@ impl RenderRunner {
                 Ok(images)
             },
         );
-
-        if !bar.disable && size != 0 {
+        if should_show_progress {
             eprintln!();
         }
+
         images_pair_result
     }
 

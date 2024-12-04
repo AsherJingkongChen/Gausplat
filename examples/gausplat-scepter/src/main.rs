@@ -8,22 +8,23 @@ pub fn main() -> Result<(), Report> {
     use ModelCommand::*;
 
     init()?;
+    log::info!(target: "gausplat::scepter::main", "init");
 
     let args = GausplatArguments::parse()?;
     let args = match &args.model {
         Run { path } => GausplatArguments::load(path)?,
         _ => args,
     };
-
     log::debug!(target: "gausplat::scepter::main", "args > {args:#?}");
 
     let time = Instant::now();
     let log_runner = |runner: &dyn Runner| {
         let time = time.elapsed();
         log::debug!(target: "gausplat::scepter::main", "runner > {runner:#?}");
-        log::info!(target: "gausplat::scepter::main", "run after {time:.03?}");
+        log::info!(target: "gausplat::scepter::main", "init in {time:.03?}");
     };
 
+    let time = Instant::now();
     match &args.model {
         Gaussian3d(command) => {
             use Gaussian3dModelCommand::*;
@@ -45,6 +46,7 @@ pub fn main() -> Result<(), Report> {
         },
         _ => unimplemented!(),
     };
+    log::info!(target: "gausplat::scepter::main", "run in {:.02?}", time.elapsed());
 
     Ok(())
 }
@@ -56,8 +58,6 @@ pub fn init() -> Result<(), Report> {
     pretty_env_logger::formatted_timed_builder()
         .parse_default_env()
         .try_init()?;
-
-    log::info!(target: "gausplat::scepter::main", "init");
 
     Ok(())
 }
