@@ -3,9 +3,12 @@ pub use command::gaussian_3d::RenderArguments;
 pub use gausplat_loader::source::image::Image;
 
 use color_eyre::eyre::eyre;
+use rayon::iter::{IndexedParallelIterator, IntoParallelIterator, ParallelIterator};
 use std::{
+    convert::identity,
     fmt, fs,
     path::{Path, PathBuf},
+    time::Instant,
 };
 
 #[derive(Clone)]
@@ -73,17 +76,42 @@ impl RenderArguments {
 }
 
 impl RenderRunner {
-    #[inline]
-    fn get_image_from_tensor(tensor: Tensor<Wgpu, 3>) -> Image {
-        let mut image = Image {
-            image_file_path: " .png".into(),
-            ..Default::default()
-        };
-        // NOTE: Assume that the tensor is in correct shape.
-        image.encode_rgb_tensor(tensor).unwrap();
-        image
+    /// Obtaining the rendered and true images from the `cameras` and `scene`.
+    pub fn get_images_rendered_and_true(
+        bar: &mut Bar,
+        cameras: Cameras,
+        options: &Gaussian3dRenderOptions,
+        scene: &Gaussian3dScene<Wgpu>,
+    ) -> Result<(Vec<Image>, Vec<Image>), Report> {
+        let size = cameras.len();
+
+        bar.update_to(0)?;
+        bar.total = size;
+        let images_pair_result = cameras.into_values().try_fold(
+            (Vec::with_capacity(size), Vec::with_capacity(size)),
+            |mut images, camera| {
+                let mut image_rendered = Image {
+                    image_file_path: "_.png".into(),
+                    ..Default::default()
+                };
+                image_rendered.encode_rgb_tensor(
+                    scene.render(&camera.view, options)?.colors_rgb_2d,
+                )?;
+                images.0.push(image_rendered);
+                images.1.push(camera.image);
+                bar.update(1)?;
+
+                Ok(images)
+            },
+        );
+
+        if !bar.disable && size != 0 {
+            eprintln!();
+        }
+        images_pair_result
     }
 
+    /// Creating a new `directory`.
     #[inline]
     pub fn make_directory(directory: PathBuf) -> Result<PathBuf, Report> {
         fs::remove_dir_all(&directory).or_else(|_| fs::create_dir_all(&directory))?;
@@ -91,15 +119,21 @@ impl RenderRunner {
         Ok(directory)
     }
 
+    /// Saving the `images` to the `directory`.
     #[inline]
-    pub fn save_image(
+    pub fn save_images(
         directory: impl AsRef<Path>,
-        index: usize,
-        mut image: Image,
-    ) -> Result<(), Report> {
-        image.image_file_path = directory.as_ref().join(format!("{index:05}.png"));
-        image.save()?;
-        Ok(())
+        images: Vec<Image>,
+    ) -> impl ParallelIterator<Item = Result<(), Report>> {
+        let directory = directory.as_ref().to_owned();
+        images
+            .into_par_iter()
+            .enumerate()
+            .map(move |(index, mut image)| {
+                image.image_file_path = directory.join(format!("{index:05}.png"));
+                image.save()?;
+                Ok(())
+            })
     }
 }
 
@@ -142,64 +176,45 @@ impl Runner for RenderRunner {
         if self.arguments.skip_train {
             self.cameras_train.clear();
         }
-        let test_size = self.cameras_test.len();
-        let train_size = self.cameras_train.len();
 
         // Specifying the progress bar
 
         let mut bar = get_bar();
         bar.colour = Some("ansi(45)".into());
-        bar.desc = "| Painting 3DGS".into();
+        bar.desc = "| Printing 3DGS".into();
         bar.disable = quiet != 0;
         bar.mininterval = 0.005;
         bar.postfix = format!(" Iteration {iteration} |");
 
-        // Rendering and saving the images
+        // Obtaining the rendered and true images
 
-        bar.total = test_size;
-        self.cameras_test
-            .into_values()
-            .enumerate()
-            .try_for_each(|(index, camera)| {
-                Self::save_image(
-                    &dir_test_rendered,
-                    index,
-                    Self::get_image_from_tensor(
-                        self.scene
-                            .render(&camera.view, &options_renderer)?
-                            .colors_rgb_2d,
-                    ),
-                )?;
-                Self::save_image(&dir_test_true, index, camera.image)?;
-                bar.update(1)?;
-
-                Ok::<_, Report>(())
-            })?;
-        if !bar.disable && test_size != 0 {
-            eprintln!();
-        }
-
-        bar.total = train_size;
-        self.cameras_train.into_values().enumerate().try_for_each(
-            |(index, camera)| {
-                Self::save_image(
-                    &dir_train_rendered,
-                    index,
-                    Self::get_image_from_tensor(
-                        self.scene
-                            .render(&camera.view, &options_renderer)?
-                            .colors_rgb_2d,
-                    ),
-                )?;
-                Self::save_image(&dir_train_true, index, camera.image)?;
-                bar.update(1)?;
-
-                Ok::<_, Report>(())
-            },
+        let (imgs_test_rendered, imgs_test_true) = Self::get_images_rendered_and_true(
+            &mut bar,
+            self.cameras_test,
+            &options_renderer,
+            &self.scene,
         )?;
-        if !bar.disable && train_size != 0 {
-            eprintln!();
-        }
+        let (imgs_train_rendered, imgs_train_true) = Self::get_images_rendered_and_true(
+            &mut bar,
+            self.cameras_train,
+            &options_renderer,
+            &self.scene,
+        )?;
+
+        // Saving the images
+
+        let time = Instant::now();
+        rayon::iter::empty()
+            .chain(Self::save_images(&dir_test_rendered, imgs_test_rendered))
+            .chain(Self::save_images(&dir_test_true, imgs_test_true))
+            .chain(Self::save_images(&dir_train_rendered, imgs_train_rendered))
+            .chain(Self::save_images(&dir_train_true, imgs_train_true))
+            .try_for_each(identity)?;
+
+        log::info!(
+            target: "gausplat::scepter::gaussian_3d::render",
+            "save in {:.03?}", time.elapsed(),
+        );
 
         Ok(())
     }

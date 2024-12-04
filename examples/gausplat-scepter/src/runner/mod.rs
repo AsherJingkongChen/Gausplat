@@ -31,11 +31,12 @@ pub fn get_bar() -> Bar {
 }
 
 pub fn init_bar(bar: &Bar) {
-    use kdam::term::{init, Writer::*};
+    use kdam::term::{init, InitializedOutput::*};
     use std::io::{stderr, stdout, IsTerminal};
 
     init(match bar.writer {
         Stderr => stderr().is_terminal(),
         Stdout => stdout().is_terminal(),
+        _ => false,
     });
 }

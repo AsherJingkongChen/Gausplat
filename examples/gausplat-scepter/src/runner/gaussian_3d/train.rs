@@ -50,6 +50,7 @@ impl TrainArguments {
 }
 
 impl TrainRunner {
+    /// Saves the model to the specified path.
     pub fn save_model(
         iteration: u64,
         model_path: impl AsRef<Path>,
@@ -74,7 +75,6 @@ impl TrainRunner {
 impl Runner for TrainRunner {
     fn run(mut self) -> Result<(), Report> {
         // TODO: RZC
-        // - RZC_?
 
         // Specifying the parameters
 

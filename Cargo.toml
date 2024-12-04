@@ -22,16 +22,16 @@ burn-ndarray = {git = "https://github.com/tracel-ai/burn", rev = "3dc4b43e92ec56
 burn-tensor = {git = "https://github.com/tracel-ai/burn", rev = "3dc4b43e92ec5683ca39c194acf274b131d44dfa", default-features = false}
 bytemuck = {version = "1.20.0", default-features = false}
 byteorder = {version = "1.5.0", default-features = false}
-clap = {version = "4.5.21", default-features = false}
+clap = {version = "4.5.22", default-features = false}
 color-eyre = {version = "0.6.3", default-features = false}
 dashmap = {version = "6.0.1", default-features = false}
 derive_more = {version = "1.0.0", default-features = false}
 divan = {version = "0.1.15", default-features = false}
 globset = {version = "0.4.15", default-features = false}
 humansize = {version = "2.1.3", default-features = false}
-image = {version = "0.25.2", default-features = false}
-indexmap = {version = "2.5.0", default-features = false}
-kdam = {version = "0.5.2", default-features = false}
+image = {version = "0.25.5", default-features = false}
+indexmap = {version = "2.7.0", default-features = false}
+kdam = {version = "0.6.1", default-features = false}
 lazy_static = {version = "1.5.0", default-features = false}
 log = {version = "0.4.22", default-features = false}
 paste = {version = "1.0.15", default-features = false}

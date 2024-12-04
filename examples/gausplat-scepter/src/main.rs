@@ -2,6 +2,7 @@ pub use gausplat_scepter::{
     command::{GausplatArguments, Gaussian3dModelCommand, ModelCommand, Report},
     runner::Runner,
 };
+use std::time::Instant;
 
 pub fn main() -> Result<(), Report> {
     use ModelCommand::*;
@@ -16,9 +17,9 @@ pub fn main() -> Result<(), Report> {
 
     log::debug!(target: "gausplat::scepter::main", "args > {args:#?}");
 
-    let time_run = std::time::Instant::now();
+    let time = Instant::now();
     let log_runner = |runner: &dyn Runner| {
-        let time = time_run.elapsed();
+        let time = time.elapsed();
         log::debug!(target: "gausplat::scepter::main", "runner > {runner:#?}");
         log::info!(target: "gausplat::scepter::main", "run after {time:.03?}");
     };
