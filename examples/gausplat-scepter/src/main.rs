@@ -1,47 +1,63 @@
 use gausplat_scepter::command::{
-    styling, CommandFactory, FromArgMatches, GausplatArguments, Gaussian3dModelCommand,
-    ModelCommand,
+    GausplatArguments, Gaussian3dModelCommand, ModelCommand, Report,
 };
 
-fn main() -> color_eyre::Result<()> {
-    color_eyre::install()?;
-    std::env::set_var("RUST_BACKTRACE", "full");
-
-    pretty_env_logger::formatted_timed_builder()
-        .parse_default_env()
-        .try_init()?;
-    log::info!(target: "gausplat::dev", "main");
-
-    let styles = styling::Styles::styled()
-        .header(styling::AnsiColor::Green.on_default().bold())
-        .usage(styling::AnsiColor::Green.on_default().bold())
-        .literal(styling::AnsiColor::Cyan.on_default().bold())
-        .placeholder(styling::AnsiColor::Cyan.on_default())
-        .error(styling::AnsiColor::Red.on_default().bold())
-        .invalid(styling::AnsiColor::Yellow.on_default().bold())
-        .valid(styling::AnsiColor::Cyan.on_default().bold());
-    let args = GausplatArguments::from_arg_matches_mut(
-        &mut GausplatArguments::command().styles(styles).get_matches(),
-    )?;
-
+pub fn main() -> Result<(), Report> {
     use ModelCommand::*;
+
+    init()?;
+
+    let args = GausplatArguments::parse()?;
+    let args = match &args.model {
+        Run { path } => GausplatArguments::load(path)?,
+        _ => args,
+    };
+
+    #[cfg(all(debug_assertions, not(test)))]
+    log::debug!(target: "gausplat-scepter::main", "args > {args:#?}");
+
     match &args.model {
         Gaussian3d(command) => {
             use Gaussian3dModelCommand::*;
             match command {
                 Train(args_train) => {
                     args.save(&args_train.common_arguments.model_path, "args-train")?;
-                    args_train.init()?.run()?;
+                    let runner = args_train.init()?;
+
+                    // TODO: DRY: Runner::run
+
+                    #[cfg(all(debug_assertions, not(test)))]
+                    log::debug!(target: "gausplat::scepter::main", "runner > {runner:#?}");
+
+                    runner.run()?;
                 },
                 Render(args_render) => {
-                    // args-render is not needed.
                     args.save(&args_render.common_arguments.model_path, "args-render")?;
-                    args_render.init()?.run()?;
+                    let runner = args_render.init()?;
+
+                    #[cfg(all(debug_assertions, not(test)))]
+                    log::debug!(target: "gausplat::scepter::main", "runner > {runner:#?}");
+
+                    runner.run()?;
                 },
                 Eval(_args_eval) => unimplemented!(),
             }
         },
+        _ => {},
     }
+
+    Ok(())
+}
+
+pub fn init() -> Result<(), Report> {
+    color_eyre::install()?;
+    std::env::set_var("RUST_BACKTRACE", "full");
+
+    pretty_env_logger::formatted_timed_builder()
+        .parse_default_env()
+        .try_init()?;
+
+    log::info!(target: "gausplat::scepter::main", "init");
 
     Ok(())
 }
