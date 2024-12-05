@@ -238,11 +238,6 @@ impl From<&TrainArguments> for Gaussian3dTrainerConfig {
                         arguments_increasing_sh_degree_until_iter,
                         arguments.increase_sh_degree_interval,
                     ))
-                    .with_range_resetting_opacities(RangeOptions::new(
-                        arguments.opacity_reset_interval,
-                        arguments.densify_until_iter,
-                        arguments.opacity_reset_interval,
-                    ))
                     .with_threshold_position_2d_grad_norm(
                         arguments.densify_grad_threshold,
                     )
