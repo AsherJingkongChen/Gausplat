@@ -46,7 +46,7 @@ pub fn main() -> Result<(), Report> {
         },
         Run { .. } => unreachable!(),
     };
-    log::info!(target: "gausplat::scepter::main", "run in {:.02?}", time.elapsed());
+    log::info!(target: "gausplat::scepter::main", "run in {:.03?}", time.elapsed());
 
     Ok(())
 }

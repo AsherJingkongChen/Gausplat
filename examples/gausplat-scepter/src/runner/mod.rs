@@ -1,3 +1,5 @@
+//! Runner module.
+
 pub mod gaussian_3d;
 
 pub use super::*;
@@ -8,9 +10,11 @@ use std::fmt::Debug;
 
 /// Task runner.
 pub trait Runner: Debug {
+    /// Run the task.
     fn run(self) -> Result<(), Report>;
 }
 
+/// Initialize the progress bar.
 pub fn get_bar() -> Bar {
     // NOTE: The bar format is correct.
     let bar = kdam::BarBuilder::default()
@@ -30,6 +34,7 @@ pub fn get_bar() -> Bar {
     bar
 }
 
+/// Initialize the color of progress bar.
 pub fn init_bar(bar: &Bar) {
     use kdam::term::{init, InitializedOutput::*};
     use std::io::{stderr, stdout, IsTerminal};

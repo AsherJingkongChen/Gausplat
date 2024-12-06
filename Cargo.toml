@@ -6,10 +6,12 @@ members = [
 resolver = "2"
 
 [workspace.package]
+authors = ["AsherJingkongChen"]
 edition = "2021"
+homepage = "https://github.com/AsherJingkongChen/Gausplat"
+repository = "https://github.com/AsherJingkongChen/Gausplat"
 rust-version = "1.83.0"
 version = "0.0.0+alpha"
-authors = ["AsherJingkongChen"]
 
 [workspace.dependencies]
 gausplat-loader = {path = "crates/gausplat-loader"}

@@ -1,3 +1,5 @@
+//! Training runner for 3DGS.
+
 pub use super::*;
 pub use command::gaussian_3d::TrainArguments;
 pub use gausplat_trainer::train::gaussian_3d::Gaussian3dTrainerConfig;
@@ -16,16 +18,23 @@ use std::{
     path::{Path, PathBuf},
 };
 
+/// Training runner.
 #[derive(Clone)]
 pub struct TrainRunner {
+    /// Arguments for training.
     pub arguments: TrainArguments,
+    /// Cameras for testing.
     pub cameras_test: Cameras,
+    /// Cameras for training.
     pub cameras_train: Cameras,
+    /// Scene to train.
     pub scene: Gaussian3dScene<Autodiff<Wgpu>>,
+    /// Trainer.
     pub trainer: Gaussian3dTrainer<Autodiff<Wgpu>>,
 }
 
 impl TrainArguments {
+    /// Initialize the training runner.
     pub fn init(&self) -> Result<TrainRunner, Report> {
         let arguments = self.to_owned();
 

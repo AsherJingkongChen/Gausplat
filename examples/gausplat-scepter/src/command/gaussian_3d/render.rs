@@ -1,8 +1,11 @@
+//! Rendering command for 3DGS.
+
+
 pub use super::*;
 
 use gausplat_renderer::render::gaussian_3d::Gaussian3dRenderOptions;
 
-/// Render for 3D Gaussian Splatting.
+/// Render for 3DGS.
 #[derive(Clone, Debug, Deserialize, Parser, PartialEq, Serialize)]
 #[command(verbatim_doc_comment, rename_all = "kebab-case", after_help = AFTER_HELP)]
 #[command(next_line_help = true)]
@@ -33,7 +36,7 @@ pub struct RenderArguments {
     )]
     pub sh_degree: u32,
 
-    /// Common arguments for 3D Gaussian Splatting.
+    /// Common arguments for 3DGS.
     #[command(flatten)]
     pub common_arguments: Gaussian3dCommonArguments,
 }

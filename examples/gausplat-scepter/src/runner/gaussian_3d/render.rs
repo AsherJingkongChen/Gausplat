@@ -1,3 +1,5 @@
+//! Rendering runner for 3DGS.
+
 pub use super::*;
 pub use command::gaussian_3d::RenderArguments;
 pub use gausplat_loader::source::image::Image;
@@ -11,16 +13,23 @@ use std::{
     time::Instant,
 };
 
+/// Rendering runner.
 #[derive(Clone)]
 pub struct RenderRunner {
+    /// Arguments for rendering.
     pub arguments: RenderArguments,
+    /// Cameras for testing.
     pub cameras_test: Cameras,
+    /// Cameras for training.
     pub cameras_train: Cameras,
+    /// The iteration to render.
     pub iteration: u64,
+    /// Scene for rendering.
     pub scene: Gaussian3dScene<Wgpu>,
 }
 
 impl RenderArguments {
+    /// Initialize the rendering runner.
     pub fn init(&self) -> Result<RenderRunner, Report> {
         let arguments = self.to_owned();
 
@@ -184,7 +193,7 @@ impl Runner for RenderRunner {
         // Specifying the progress bar
 
         let mut bar = get_bar();
-        bar.colour = Some("ansi(45)".into());
+        bar.colour = Some("ansi(190)".into());
         bar.desc = "| Printing 3DGS".into();
         bar.disable = quiet != 0;
         bar.mininterval = 0.005;

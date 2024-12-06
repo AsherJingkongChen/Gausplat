@@ -1,3 +1,5 @@
+//! Command module.
+
 pub mod gaussian_3d;
 
 pub use super::*;
@@ -14,12 +16,17 @@ use std::{
     path::{Path, PathBuf},
 };
 
+/// After help message.
 pub const AFTER_HELP: &str = "\
     For more information, please see 'https://github.com/AsherJingkongChen/Gausplat'.";
 
+/// Help message template.
 pub const HELP_TEMPLATE: &str = "\
     {about}\n\n{usage-heading} {usage}\n\n{all-args}{after-help}";
 
+/// Styles for the command.
+/// 
+/// It is close to Cargo's style.
 pub const STYLES: styling::Styles = styling::Styles::styled()
     .header(styling::AnsiColor::Green.on_default().bold())
     .usage(styling::AnsiColor::Green.on_default().bold())
@@ -57,7 +64,7 @@ pub enum ModelCommand {
         path: PathBuf,
     },
 
-    /// Run tasks for 3D Gaussian Splatting.
+    /// Run tasks for 3DGS.
     #[command(verbatim_doc_comment, rename_all = "kebab-case", after_help = AFTER_HELP)]
     #[command(subcommand, name = "3dgs")]
     #[serde(rename = "3dgs")]
@@ -65,11 +72,13 @@ pub enum ModelCommand {
 }
 
 impl GausplatArguments {
+    /// Return the styled command.
     #[inline]
     pub fn command() -> Command {
         <Self as CommandFactory>::command().styles(STYLES)
     }
 
+    /// Load the arguments from the file.
     #[inline]
     pub fn load(file_path: impl AsRef<Path>) -> Result<Self, Report> {
         Ok(serde_json::from_reader(&mut BufReader::new(File::open(
@@ -77,6 +86,7 @@ impl GausplatArguments {
         )?))?)
     }
 
+    /// Parse the arguments from the command line.
     #[inline]
     pub fn parse() -> Result<Self, Report> {
         Ok(Self::from_arg_matches_mut(
@@ -84,6 +94,7 @@ impl GausplatArguments {
         )?)
     }
 
+    /// Save the arguments to the file.
     pub fn save(
         &self,
         directory: impl AsRef<Path>,

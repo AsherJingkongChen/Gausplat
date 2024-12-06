@@ -1,3 +1,5 @@
+//! Command for 3DGS.
+
 pub mod eval;
 pub mod render;
 pub mod train;
@@ -9,27 +11,27 @@ pub use train::*;
 
 use clap::ArgAction;
 
-/// Run tasks for 3D Gaussian Splatting.
+/// Run tasks for 3DGS.
 #[derive(Clone, Debug, Deserialize, PartialEq, Parser, Serialize)]
 #[command(verbatim_doc_comment, rename_all = "kebab-case", after_help = AFTER_HELP)]
 pub enum Gaussian3dModelCommand {
-    /// Evaluate for 3D Gaussian Splatting.
+    /// Evaluate for 3DGS.
     #[command(verbatim_doc_comment, rename_all = "kebab-case", after_help = AFTER_HELP)]
     #[serde(rename = "eval")]
     Eval(EvalArguments),
 
-    /// Render for 3D Gaussian Splatting.
+    /// Render for 3DGS.
     #[command(verbatim_doc_comment, rename_all = "kebab-case", after_help = AFTER_HELP)]
     #[serde(rename = "render")]
     Render(RenderArguments),
 
-    /// Train for 3D Gaussian Splatting.
+    /// Train for 3DGS.
     #[command(verbatim_doc_comment, rename_all = "kebab-case", after_help = AFTER_HELP)]
     #[serde(rename = "train")]
     Train(TrainArguments),
 }
 
-/// Common arguments for 3D Gaussian Splatting.
+/// Common arguments for 3DGS.
 #[derive(Clone, Debug, Deserialize, Serialize, Parser, PartialEq)]
 #[command(verbatim_doc_comment, rename_all = "kebab-case", after_help = AFTER_HELP)]
 pub struct Gaussian3dCommonArguments {

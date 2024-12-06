@@ -1,3 +1,5 @@
+//! 3DGS runner.
+
 pub mod eval;
 pub mod render;
 pub mod train;
@@ -110,6 +112,7 @@ pub fn get_cameras_and_points(
     Ok((cameras_test, cameras_train, dataset.points))
 }
 
+/// Return the M-SSIM and PSNR metrics.
 pub fn get_mssim_and_psnr(
     cameras: &Cameras,
     options: &Gaussian3dRenderOptions,

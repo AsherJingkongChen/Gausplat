@@ -1,6 +1,8 @@
+//! Evaluation command for 3DGS.
+
 pub use super::*;
 
-/// Evaluate for 3D Gaussian Splatting.
+/// Evaluate for 3DGS.
 #[derive(Clone, Debug, Deserialize, Parser, PartialEq, Serialize)]
 #[command(verbatim_doc_comment, rename_all = "kebab-case", after_help = AFTER_HELP)]
 #[command(next_line_help = true)]
