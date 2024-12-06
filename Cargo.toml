@@ -14,6 +14,7 @@ rust-version = "1.83.0"
 version = "0.0.0+alpha"
 
 [workspace.dependencies]
+gausplat = {path = "crates/gausplat"}
 gausplat-loader = {path = "crates/gausplat-loader"}
 gausplat-renderer = {path = "crates/gausplat-renderer"}
 gausplat-trainer = {path = "crates/gausplat-trainer"}

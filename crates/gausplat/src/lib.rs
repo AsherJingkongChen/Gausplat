@@ -1,6 +1,4 @@
-//! A library for novel view-synthesis inspired by the concepts of Gaussian splatting
-
-#![deny(rustdoc::broken_intra_doc_links)]
+#![doc = include_str!("../../../README.md")]
 #![allow(clippy::excessive_precision)]
 #![deny(missing_docs)]
 

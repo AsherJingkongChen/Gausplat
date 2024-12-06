@@ -1817,6 +1817,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "gausplat"
+version = "0.0.0+alpha"
+dependencies = [
+ "gausplat-loader",
+ "gausplat-renderer",
+ "gausplat-trainer",
+]
+
+[[package]]
 name = "gausplat-loader"
 version = "0.0.0+alpha"
 dependencies = [
@@ -1863,9 +1872,7 @@ dependencies = [
  "burn",
  "clap",
  "color-eyre",
- "gausplat-loader",
- "gausplat-renderer",
- "gausplat-trainer",
+ "gausplat",
  "kdam",
  "log",
  "pretty_env_logger",
