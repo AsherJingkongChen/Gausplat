@@ -2,8 +2,8 @@
 
 pub use super::*;
 
-use gausplat_trainer::train::gaussian_3d::Gaussian3dTrainerConfig;
-use gausplat_trainer::train::gaussian_3d::RefinerConfig;
+use gausplat::trainer::train::gaussian_3d::Gaussian3dTrainerConfig;
+use gausplat::trainer::train::gaussian_3d::RefinerConfig;
 use std::sync::LazyLock;
 
 /// Train for 3DGS.

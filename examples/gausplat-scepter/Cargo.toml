@@ -11,9 +11,7 @@ repository = "https://github.com/AsherJingkongChen/Gausplat"
 version.workspace = true
 
 [dependencies]
-gausplat-loader = {workspace = true}
-gausplat-renderer = {workspace = true}
-gausplat-trainer = {workspace = true}
+gausplat = {workspace = true}
 
 burn = {workspace = true}
 clap = {workspace = true, features = ["default", "derive"]}

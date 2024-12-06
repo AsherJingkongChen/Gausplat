@@ -8,12 +8,12 @@ use std::path::PathBuf;
 
 pub use super::*;
 pub use command::{Gaussian3dCommonArguments, Gaussian3dModelCommand};
-pub use gausplat_trainer::{
+pub use gausplat::trainer::{
     dataset::sparse_view::{Cameras, Points, SparseViewDataset},
     train::gaussian_3d::{Gaussian3dRenderOptions, Gaussian3dScene, Wgpu},
 };
 
-use gausplat_loader::{
+use gausplat::loader::{
     collection::IndexSet,
     function::Decoder,
     source::{
@@ -21,7 +21,7 @@ use gausplat_loader::{
         file::{File, Files, Opener},
     },
 };
-use gausplat_trainer::{
+use gausplat::trainer::{
     metric::{MeanStructuralSimilarity, Metric, Psnr},
     train::gaussian_3d::{Tensor, WgpuDevice},
 };

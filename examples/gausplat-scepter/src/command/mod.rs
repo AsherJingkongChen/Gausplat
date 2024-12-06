@@ -9,7 +9,7 @@ pub use gaussian_3d::{Gaussian3dCommonArguments, Gaussian3dModelCommand};
 pub use serde::{Deserialize, Serialize};
 
 use clap::CommandFactory;
-use gausplat_loader::source::file::{File, Opener};
+use gausplat::loader::source::file::{File, Opener};
 use std::{
     fs::create_dir_all,
     io::BufReader,

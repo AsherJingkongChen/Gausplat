@@ -2,10 +2,10 @@
 
 pub use super::*;
 pub use command::gaussian_3d::TrainArguments;
-pub use gausplat_trainer::train::gaussian_3d::Gaussian3dTrainerConfig;
+pub use gausplat::trainer::train::gaussian_3d::Gaussian3dTrainerConfig;
 
-use gausplat_renderer::spherical_harmonics::SH_DEGREE_MAX;
-use gausplat_trainer::{
+use gausplat::renderer::spherical_harmonics::SH_DEGREE_MAX;
+use gausplat::trainer::{
     metric::{Metric, Psnr},
     optimize::LearningRateConfig,
     range::RangeOptions,

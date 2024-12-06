@@ -2,7 +2,7 @@
 
 pub use super::*;
 pub use command::gaussian_3d::RenderArguments;
-pub use gausplat_loader::source::image::Image;
+pub use gausplat::loader::source::image::Image;
 
 use color_eyre::eyre::eyre;
 use rayon::iter::{IndexedParallelIterator, IntoParallelIterator, ParallelIterator};

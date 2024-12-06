@@ -3,7 +3,7 @@
 
 pub use super::*;
 
-use gausplat_renderer::render::gaussian_3d::Gaussian3dRenderOptions;
+use gausplat::renderer::render::gaussian_3d::Gaussian3dRenderOptions;
 
 /// Render for 3DGS.
 #[derive(Clone, Debug, Deserialize, Parser, PartialEq, Serialize)]

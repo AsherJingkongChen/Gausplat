@@ -1,6 +1,6 @@
 //! A tool to run tasks for `gausplat`
 
-#![deny(broken_intra_doc_links)]
+#![deny(rustdoc::broken_intra_doc_links)]
 #![allow(clippy::excessive_precision)]
 #![deny(missing_docs)]
 

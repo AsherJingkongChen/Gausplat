@@ -1,0 +1,15 @@
+[package]
+description = "A library for novel view-synthesis inspired by the concepts of Gaussian splatting"
+edition.workspace = true
+homepage.workspace = true
+license-file = "../../LICENSE"
+name = "gausplat"
+publish = false
+readme = "../../README.md"
+repository = "https://github.com/AsherJingkongChen/Gausplat"
+version.workspace = true
+
+[dependencies]
+gausplat-loader = {workspace = true}
+gausplat-renderer = {workspace = true}
+gausplat-trainer = {workspace = true}
