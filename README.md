@@ -33,6 +33,10 @@
     cargo run -r -p gausplat-scepter help
     ```
 
+## Documentation
+
+- [API](https://asherjingkongchen.github.io/Gausplat/gausplat/index.html)
+
 ## Contributing
 
 Currently, only issues will be accepted. Please feel free to open a new issue if you have any questions or suggestions.
