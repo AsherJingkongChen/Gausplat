@@ -4,7 +4,7 @@
 
 ## Getting Started
 
-1. Show help message.
+1. Show help me ssage.
 
     ```sh
     cargo r -r -p gausplat-scepter help
