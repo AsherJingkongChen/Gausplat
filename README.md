@@ -36,6 +36,7 @@
 ## Documentation
 
 - [API](https://asherjingkongchen.github.io/Gausplat/gausplat/index.html)
+- [GitHub Repository](https://github.com/AsherJingkongChen/Gausplat)
 
 ## Contributing
 
@@ -49,5 +50,7 @@ If you are confident in your changes, you can also create a pull request directl
 | **MIT** | `gausplat` | Please attach the license to your project. |
 | **LGPL v3.0** | `gausplat-scepter` | Please license your modifications under the LGPL. <br/> Using the original software doesn’t require your project to adopt LGPL. <br/> |
 
-> [!WARN]
-> The **LGPL-licensed part** is intended for development-only use. For commercial products, it is recommended to base your work on **MIT-licensed part**.
+<blockquote style=border-left-color:gold>
+<strong style=color:gold>⚠️ WARNING</strong><br/>
+The <strong>LGPL-licensed part</strong> is intended for development-only use. For commercial products, it is recommended to base your work on <strong>MIT-licensed part</strong>.
+</blockquote>
