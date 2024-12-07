@@ -4,8 +4,12 @@
 
 ## Getting Started
 
-**Show help message**
+1. Show help message.
 
   ```sh
   cargo r -r -p gausplat-scepter help
   ```
+
+## License
+
+**LGPL v3.0**

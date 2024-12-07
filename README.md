@@ -4,8 +4,8 @@
 
 ## Status
 
-- Active Development
 - Experimental
+- Working on enhancing the performance
 
 ## Getting Started
 
@@ -39,8 +39,15 @@
 
 ## Contributing
 
-Currently, only issues will be accepted. Please feel free to open a new issue if you have any questions or suggestions.
+Feel free to open a new issue if you have any questions or suggestions.
+If you are confident in your changes, you can also create a pull request directly.
 
 ## License
 
-- **MIT**: Free. Please remember to attach the license to your project if you use this project.
+| License | Targets | Description |
+| --- | --- | --- |
+| **MIT** | `gausplat` | Please attach the license to your project. |
+| **LGPL v3.0** | `gausplat-scepter` | Please license your modifications under the LGPL. <br/> Using the original software doesn’t require your project to adopt LGPL. <br/> |
+
+> [!WARN]
+> The **LGPL-licensed part** is intended for development-only use. For commercial products, it is recommended to base your work on **MIT-licensed part**.

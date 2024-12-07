@@ -87,7 +87,7 @@ impl TrainRunner {
 impl Runner for TrainRunner {
     fn run(mut self) -> Result<(), Report> {
         const IMAGE_SIZE_MIN: u32 = 320;
-        const IMAGE_SIZE_MAX: u32 = IMAGE_SIZE_MIN * 8;
+        const IMAGE_SIZE_MAX: u32 = IMAGE_SIZE_MIN * 4;
 
         // Specifying the parameters
 
