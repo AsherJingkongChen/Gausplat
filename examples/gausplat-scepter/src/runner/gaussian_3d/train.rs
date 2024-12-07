@@ -13,9 +13,11 @@ use gausplat::trainer::{
         Autodiff, AutodiffModule, Gaussian3dTrainer, RefinerConfig, SEED,
     },
 };
+use rayon::iter::ParallelIterator;
 use std::{
     fmt, fs,
     path::{Path, PathBuf},
+    time::Instant,
 };
 
 /// Training runner.
@@ -84,7 +86,8 @@ impl TrainRunner {
 
 impl Runner for TrainRunner {
     fn run(mut self) -> Result<(), Report> {
-        // TODO: RZC
+        const IMAGE_SIZE_MIN: u32 = 320;
+        const IMAGE_SIZE_MAX: u32 = IMAGE_SIZE_MIN * 8;
 
         // Specifying the parameters
 
@@ -116,6 +119,22 @@ impl Runner for TrainRunner {
         if can_show_details {
             bar.postfix = format!(" {size} | PSNR {psnr:.2} dB |");
         }
+
+        // Rescaling down the images at initialization
+
+        let time = Instant::now();
+        self.cameras_train.par_values_mut().try_for_each(|camera| {
+            let size_source = camera.size_max();
+            let size_target = size_source.clamp(IMAGE_SIZE_MIN, IMAGE_SIZE_MAX);
+            if size_source != size_target {
+                camera.resize_max(size_target)?;
+            }
+            Ok::<_, Report>(())
+        })?;
+        log::info!(
+            target: "gausplat::scepter::gaussian_3d::train",
+            "may rescale in {:.03?}", time.elapsed(),
+        );
 
         // Optimizing the scene iteratively
 

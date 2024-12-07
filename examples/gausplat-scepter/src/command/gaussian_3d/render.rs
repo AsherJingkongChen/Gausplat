@@ -1,6 +1,5 @@
 //! Rendering command for 3DGS.
 
-
 pub use super::*;
 
 use gausplat::renderer::render::gaussian_3d::Gaussian3dRenderOptions;

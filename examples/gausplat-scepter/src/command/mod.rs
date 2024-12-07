@@ -25,7 +25,7 @@ pub const HELP_TEMPLATE: &str = "\
     {about}\n\n{usage-heading} {usage}\n\n{all-args}{after-help}";
 
 /// Styles for the command.
-/// 
+///
 /// It is close to Cargo's style.
 pub const STYLES: styling::Styles = styling::Styles::styled()
     .header(styling::AnsiColor::Green.on_default().bold())
