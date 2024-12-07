@@ -19,7 +19,8 @@
 1. Clone the repository and navigate into it.
 
    ```shell
-   git clone --recursive https://github.com/AsherJingkongChen/Gausplat && cd Gausplat
+   git clone --recursive \
+   https://github.com/AsherJingkongChen/Gausplat && cd Gausplat
    ```
 
 2. Update [Rustup](https://rustup.rs/) to the latest stable version.
