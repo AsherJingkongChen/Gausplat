@@ -24,13 +24,13 @@
 3. Build the project.
 
     ```shell
-    cargo build -r
+    cargo b -r
     ```
 
 4. Run the example program, which is located at `target/release/gausplat-scepter`.
 
     ```shell
-    cargo run -r -p gausplat-scepter help
+    cargo r -r -p gausplat-scepter help
     ```
 
 ## Documentation

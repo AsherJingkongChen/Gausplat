@@ -6,9 +6,15 @@
 
 1. Show help message.
 
-  ```sh
-  cargo r -r -p gausplat-scepter help
-  ```
+    ```sh
+    cargo r -r -p gausplat-scepter help
+    ```
+
+2. Enable the debug mode if needed.
+
+    ```sh
+    RUST_LOG=gausplat cargo r -p gausplat-scepter [...]
+    ```
 
 ## License
 
