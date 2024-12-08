@@ -10,23 +10,24 @@
 ## Features
 
 - **Gausplat** : Flexible library for developers to customize the pipeline
+- **Gausplat Scepter** : Command-line tool for view-synthesis research
 - **WGPU** : Training and rendering on Apple or NVIDIA GPUs
 - **Rust** : Easy development and deployment
 - **3DGS** : 3D scene representation with efficient rasterization
 
 ## Getting Started
 
-1. Clone the repository and navigate into it.
+1. Update [Rustup](https://rustup.rs/) to the latest stable version.
+
+   ```shell
+   rustup update stable
+   ```
+
+2. Clone the repository and navigate into it.
 
    ```shell
    git clone --recursive \
    https://github.com/AsherJingkongChen/Gausplat && cd Gausplat
-   ```
-
-2. Update [Rustup](https://rustup.rs/) to the latest stable version.
-
-   ```shell
-   rustup update stable
    ```
 
 3. Build the project.
@@ -35,10 +36,17 @@
    cargo b -r
    ```
 
-4. You can run the example program at `target/release/gausplat-scepter`.
+4. You can run the executables. One of them is at `target/release/gausplat-scepter`.
 
    ```shell
    cargo r -r -p gausplat-scepter help
+   ```
+
+   You can also install the program to your system.
+
+   ```shell
+   cargo install --locked --path examples/gausplat-scepter
+   gausplat-scepter help
    ```
 
 ## Documentation
