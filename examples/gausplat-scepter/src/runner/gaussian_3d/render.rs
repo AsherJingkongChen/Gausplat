@@ -5,12 +5,9 @@ pub use command::gaussian_3d::RenderArguments;
 pub use gausplat::loader::source::image::Image;
 
 use color_eyre::eyre::eyre;
-use rayon::iter::{IndexedParallelIterator, IntoParallelIterator, ParallelIterator};
 use std::{
-    convert::identity,
     fmt, fs,
     path::{Path, PathBuf},
-    time::Instant,
 };
 
 /// Rendering runner.
@@ -85,24 +82,24 @@ impl RenderArguments {
 }
 
 impl RenderRunner {
-    /// Obtaining the rendered and true images from the `cameras` and `scene`.
-    pub fn get_images_rendered_and_true(
+    /// Saving the rendered and true images to the directories.
+    pub fn save_images_rendered_and_true(
         bar: &mut Bar,
         cameras: Cameras,
+        directory_rendered: impl AsRef<Path>,
+        directory_true: impl AsRef<Path>,
         options: &Gaussian3dRenderOptions,
         scene: &Gaussian3dScene<Wgpu>,
-    ) -> Result<(Vec<Image>, Vec<Image>), Report> {
+    ) -> Result<(), Report> {
         let size = cameras.len();
         let should_show_progress = !bar.disable && size != 0;
 
-        bar.counter = 0;
-        bar.total = size;
-        if should_show_progress {
-            bar.refresh()?;
-        }
-        let images_pair_result = cameras.into_values().try_fold(
-            (Vec::with_capacity(size), Vec::with_capacity(size)),
-            |mut images, camera| {
+        bar.reset(Some(size));
+
+        let result = cameras
+            .into_values()
+            .enumerate()
+            .try_for_each(|(index, camera)| {
                 let mut image_rendered = Image {
                     image_file_path: "_.png".into(),
                     ..Default::default()
@@ -110,18 +107,19 @@ impl RenderRunner {
                 image_rendered.encode_rgb_tensor(
                     scene.render(&camera.view, options)?.colors_rgb_2d,
                 )?;
-                images.0.push(image_rendered);
-                images.1.push(camera.image);
+                let image_true = camera.image;
+                Self::save_image(directory_rendered.as_ref(), image_rendered, index)?;
+                Self::save_image(directory_true.as_ref(), image_true, index)?;
                 bar.update(1)?;
 
-                Ok(images)
-            },
-        );
+                Ok(())
+            });
+
         if should_show_progress {
             eprintln!();
         }
 
-        images_pair_result
+        result
     }
 
     /// Creating a new `directory`.
@@ -132,21 +130,16 @@ impl RenderRunner {
         Ok(directory)
     }
 
-    /// Saving the `images` to the `directory`.
+    /// Saving the `image` to the `directory`.
     #[inline]
-    pub fn save_images(
+    pub fn save_image(
         directory: impl AsRef<Path>,
-        images: Vec<Image>,
-    ) -> impl ParallelIterator<Item = Result<(), Report>> {
-        let directory = directory.as_ref().to_owned();
-        images
-            .into_par_iter()
-            .enumerate()
-            .map(move |(index, mut image)| {
-                image.image_file_path = directory.join(format!("{index:05}.png"));
-                image.save()?;
-                Ok(())
-            })
+        mut image: Image,
+        index: usize,
+    ) -> Result<(), Report> {
+        image.image_file_path = directory.as_ref().join(format!("{index:05}.png"));
+        image.save()?;
+        Ok(())
     }
 }
 
@@ -199,35 +192,24 @@ impl Runner for RenderRunner {
         bar.mininterval = 0.005;
         bar.postfix = format!(" Iteration {iteration} |");
 
-        // Obtaining the rendered and true images
+        // Saving the rendered and true images
 
-        let (imgs_test_rendered, imgs_test_true) = Self::get_images_rendered_and_true(
+        Self::save_images_rendered_and_true(
             &mut bar,
             self.cameras_test,
+            &dir_test_rendered,
+            &dir_test_true,
             &options_renderer,
             &self.scene,
         )?;
-        let (imgs_train_rendered, imgs_train_true) = Self::get_images_rendered_and_true(
+        Self::save_images_rendered_and_true(
             &mut bar,
             self.cameras_train,
+            &dir_train_rendered,
+            &dir_train_true,
             &options_renderer,
             &self.scene,
         )?;
-
-        // Saving the images
-
-        let time = Instant::now();
-        rayon::iter::empty()
-            .chain(Self::save_images(&dir_test_rendered, imgs_test_rendered))
-            .chain(Self::save_images(&dir_test_true, imgs_test_true))
-            .chain(Self::save_images(&dir_train_rendered, imgs_train_rendered))
-            .chain(Self::save_images(&dir_train_true, imgs_train_true))
-            .try_for_each(identity)?;
-
-        log::info!(
-            target: "gausplat::scepter::gaussian_3d::render",
-            "save in {:.03?}", time.elapsed(),
-        );
 
         Ok(())
     }
