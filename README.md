@@ -15,7 +15,7 @@
 - **Rust** : Easy development and deployment
 - **3DGS** : 3D scene representation with efficient rasterization
 
-   [![**Gausplat**](https://img.shields.io/badge/Gausplat-FF3D65.svg?style=for-the-badge&logo=gausplat&logoColor=white)](https://github.com/AsherJingkongChen/Gausplat)[![**Rust**](https://img.shields.io/badge/Rust-CE412B.svg?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)[![**WGPU**](https://img.shields.io/badge/WGPU-009E6C.svg?style=for-the-badge&logo=wgpu&logoColor=white)](https://wgpu.rs/)[![**3DGS**](https://img.shields.io/badge/3DGS-3D65FF.svg?style=for-the-badge&logo=3dgs&logoColor=white)](https://img.shields.io/badge/3DGS-3D65FF.svg?style=for-the-badge&logo=3dgs&logoColor=white)
+  [![**Gausplat**](https://img.shields.io/badge/Gausplat-FF3D65.svg?style=for-the-badge&logo=gausplat&logoColor=white)](https://github.com/AsherJingkongChen/Gausplat)[![**Rust**](https://img.shields.io/badge/Rust-CE412B.svg?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)[![**WGPU**](https://img.shields.io/badge/WGPU-009E6C.svg?style=for-the-badge&logo=wgpu&logoColor=white)](https://wgpu.rs/)[![**3DGS**](https://img.shields.io/badge/3DGS-3D65FF.svg?style=for-the-badge&logo=3dgs&logoColor=white)](https://img.shields.io/badge/3DGS-3D65FF.svg?style=for-the-badge&logo=3dgs&logoColor=white)
 
 ## Getting Started
 
@@ -55,6 +55,7 @@
 
 - [API](https://asherjingkongchen.github.io/Gausplat/gausplat/index.html)
 - [GitHub Repository](https://github.com/AsherJingkongChen/Gausplat)
+- [Report](https://github.com/AsherJingkongChen/Gausplat/blob/main/doc/REPORT.md)
 
 ## Contributing
 
