@@ -29,7 +29,7 @@
 
 ### Quality
 
-- Device (OS): Apple M2 Pro (macOS 14.6.1)
+- **Device (OS)**: Apple M2 Pro (macOS 14.6.1)
 
 | Metric | Method      | drjohnson | playroom | train | truck |
 | ------ | ----------- | --------- | -------- | ----- | ----- |
@@ -40,7 +40,7 @@
 | LPIPS  | Gausplat    |           |          |       |       |
 | LPIPS  | Placeholder |           |          |       |       |
 
-- Device (OS): NVIDIA GeForce RTX 4060 (Windows 11)
+- **Device (OS)**: NVIDIA GeForce RTX 4060 (Windows 11)
 
 | Metric | Method      | drjohnson | playroom | train | truck |
 | ------ | ----------- | --------- | -------- | ----- | ----- |
@@ -53,7 +53,7 @@
 
 ### Performance
 
-- Device (OS): Apple M2 Pro (macOS 14.6.1)
+- **Device (OS)**: Apple M2 Pro (macOS 14.6.1)
 
 | Metric | Method      | drjohnson | playroom | train | truck |
 | ------ | ----------- | --------- | -------- | ----- | ----- |
@@ -64,7 +64,7 @@
 | LPIPS  | Gausplat    |           |          |       |       |
 | LPIPS  | Placeholder |           |          |       |       |
 
-- Device (OS): NVIDIA GeForce RTX 4060 (Windows 11)
+- **Device (OS)**: NVIDIA GeForce RTX 4060 (Windows 11)
 
 | Metric | Method      | drjohnson | playroom | train | truck |
 | ------ | ----------- | --------- | -------- | ----- | ----- |
@@ -79,8 +79,8 @@
 
 ### Learning Rate of Opacity
 
-- Device (OS): Apple M2 Pro (macOS 14.6.1)
-- Method: Gausplat
+- **Device (OS)**: Apple M2 Pro (macOS 14.6.1)
+- **Method**: Gausplat
 
 | Metric   | Opacity LR. | drjohnson | playroom | train | truck |
 | -------- | ----------- | --------- | -------- | ----- | ----- |

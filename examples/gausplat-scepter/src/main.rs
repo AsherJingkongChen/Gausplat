@@ -41,7 +41,7 @@ pub fn main() -> Result<(), Report> {
                     log_runner(&runner);
                     runner.run()?;
                 },
-                Eval(_args_eval) => unimplemented!(),
+                _ => unimplemented!(),
             }
         },
         Run { .. } => unreachable!(),

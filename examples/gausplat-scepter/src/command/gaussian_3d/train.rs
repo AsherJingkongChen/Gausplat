@@ -105,26 +105,19 @@ pub struct TrainArguments {
     pub rotation_lr: f64,
 
     /// Tolerance for scalings.
-    /// It may affect the overall quality and model size.
+    /// It may affect the model quality and size.
     #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
-    #[arg(
-        long, value_name = "F64",
-        default_value_t = REFINER_CONFIG.threshold_scaling / 6.0,
-    )]
+    #[arg(long, value_name = "F64", default_value_t = 0.01)]
     pub percent_dense: f64,
 
     /// Usage of the structural dissimilarity index.
-    /// It may affect the training quality, time, and model size.
+    /// It may affect the model quality, time, size.
     #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
-    #[arg(
-        long, value_name = "F64",
-        default_value_t =
-            (TRAINER_CONFIG.range_metric_optimization_fine.step as f64 * 2.0).recip(),
-    )]
+    #[arg(long, value_name = "F64", default_value_t = 0.2)]
     pub lambda_dssim: f64,
 
     /// Number of iterations between densification.
-    /// It may affect the training quality and model size.
+    /// It may affect the model quality and size.
     /// It should not be too small.
     #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
     #[arg(
@@ -152,13 +145,22 @@ pub struct TrainArguments {
     pub densify_until_iter: u64,
 
     /// Tolerance for view-space positional error.
-    /// It may affect the training quality and model size.
+    /// It may affect the model quality and size.
     #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
     #[arg(
         long, value_name = "F64",
         default_value_t = REFINER_CONFIG.threshold_position_2d_grad_norm,
     )]
     pub densify_grad_threshold: f64,
+
+    /// Tolerance for opacity.
+    /// It may affect the model quality, time, size.
+    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(
+        long, value_name = "F64",
+        default_value_t = REFINER_CONFIG.threshold_opacity,
+    )]
+    pub prune_opacity_threshold: f64,
 
     /// Number of iterations between increasing color SH feature degree by one.
     /// It may affect the training time.

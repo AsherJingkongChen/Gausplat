@@ -252,7 +252,7 @@ impl From<&TrainArguments> for Gaussian3dTrainerConfig {
                     .with_colors_sh_degree_max(arguments.sh_degree),
             )
             .with_range_metric_optimization_fine(RangeOptions::default_with_step(
-                (arguments.lambda_dssim * 2.0).recip().max(1.0) as u64,
+                (arguments.lambda_dssim * 2.5).recip().max(1.0) as u64,
             ))
             .with_refiner(
                 RefinerConfig::new()
@@ -266,10 +266,11 @@ impl From<&TrainArguments> for Gaussian3dTrainerConfig {
                         arguments_increasing_sh_degree_until_iter,
                         arguments.increase_sh_degree_interval,
                     ))
+                    .with_threshold_opacity(arguments.prune_opacity_threshold)
                     .with_threshold_position_2d_grad_norm(
                         arguments.densify_grad_threshold,
                     )
-                    .with_threshold_scaling(arguments.percent_dense * 6.0),
+                    .with_threshold_scaling((arguments.percent_dense * 6.0).max(0.0)),
             )
     }
 }
