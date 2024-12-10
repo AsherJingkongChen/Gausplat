@@ -8,7 +8,7 @@ pub fn main() -> Result<(), Report> {
     use ModelCommand::*;
 
     init()?;
-    log::info!(target: "gausplat::scepter::main", "init");
+    log::info!(target: "gausplat::scepter::main", "start");
 
     let args = GausplatArguments::parse()?;
     let args = match &args.model {

@@ -25,7 +25,7 @@ use gausplat::trainer::{
     metric::{MeanStructuralSimilarity, Metric, Psnr},
     train::gaussian_3d::{Tensor, WgpuDevice},
 };
-use rayon::slice::ParallelSliceMut;
+use rayon::{iter::ParallelIterator, slice::ParallelSliceMut};
 
 /// ## Returns
 ///
@@ -159,4 +159,19 @@ pub fn get_mssim_and_psnr(
     let psnr_mean = scores_mean.next().unwrap();
 
     Ok((mssim_mean, psnr_mean))
+}
+
+/// Resize `cameras` to proper sizes.
+pub fn resize_cameras(cameras: &mut Cameras) -> Result<(), Report> {
+    const IMAGE_SIZE_MIN: u32 = 320;
+    const IMAGE_SIZE_MAX: u32 = IMAGE_SIZE_MIN * 5;
+
+    cameras.par_values_mut().try_for_each(|camera| {
+        let size_source = camera.size_max();
+        let size_target = size_source.clamp(IMAGE_SIZE_MIN, IMAGE_SIZE_MAX);
+        if size_source != size_target {
+            camera.resize_max(size_target)?;
+        }
+        Ok(())
+    })
 }

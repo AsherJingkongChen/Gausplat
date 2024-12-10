@@ -13,7 +13,6 @@ use gausplat::trainer::{
         Autodiff, AutodiffModule, Gaussian3dTrainer, RefinerConfig, SEED,
     },
 };
-use rayon::iter::ParallelIterator;
 use std::{
     fmt, fs,
     path::{Path, PathBuf},
@@ -86,9 +85,6 @@ impl TrainRunner {
 
 impl Runner for TrainRunner {
     fn run(mut self) -> Result<(), Report> {
-        const IMAGE_SIZE_MIN: u32 = 320;
-        const IMAGE_SIZE_MAX: u32 = IMAGE_SIZE_MIN * 5;
-
         // Specifying the parameters
 
         let device = self.scene.device();
@@ -123,14 +119,7 @@ impl Runner for TrainRunner {
         // Rescaling down the images at initialization
 
         let time = Instant::now();
-        self.cameras_train.par_values_mut().try_for_each(|camera| {
-            let size_source = camera.size_max();
-            let size_target = size_source.clamp(IMAGE_SIZE_MIN, IMAGE_SIZE_MAX);
-            if size_source != size_target {
-                camera.resize_max(size_target)?;
-            }
-            Ok::<_, Report>(())
-        })?;
+        resize_cameras(&mut self.cameras_train)?;
         log::info!(
             target: "gausplat::scepter::gaussian_3d::train",
             "may rescale in {:.03?}", time.elapsed(),
@@ -138,7 +127,8 @@ impl Runner for TrainRunner {
 
         // Optimizing the scene iteratively
 
-        self.cameras_train
+        let result = self
+            .cameras_train
             .seed(SEED)
             .random_values()
             .take(iterations)
@@ -204,14 +194,14 @@ impl Runner for TrainRunner {
                     }
                 }
 
-                Ok::<_, Report>(())
-            })?;
+                Ok(())
+            });
 
         if !bar.disable {
             eprintln!();
         }
 
-        Ok(())
+        result
     }
 }
 

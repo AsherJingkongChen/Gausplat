@@ -95,6 +95,9 @@ impl RenderRunner {
         let should_show_progress = !bar.disable && size != 0;
 
         bar.reset(Some(size));
+        if should_show_progress {
+            bar.refresh()?;
+        }
 
         let result = cameras
             .into_values()
