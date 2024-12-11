@@ -8,12 +8,12 @@ use std::sync::LazyLock;
 
 /// Train for 3DGS.
 #[derive(Clone, Debug, Deserialize, Parser, PartialEq, Serialize)]
-#[command(verbatim_doc_comment, rename_all = "kebab-case", after_help = AFTER_HELP)]
+#[command(verbatim_doc_comment, rename_all = "snake_case", after_help = AFTER_HELP)]
 #[command(next_line_help = true)]
 pub struct TrainArguments {
     /// Color SH feature degree at initial.
     /// It generally ranges from 0 to 3.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(long, value_name = "U32", default_value_t = 0)]
     pub sh_degree: u32,
 
@@ -24,7 +24,7 @@ pub struct TrainArguments {
     /// Iterations for testing.
     /// It may take few second to run.
     /// If '-qq' is set, no test will be performed.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "U64", num_args = 0..,
         default_values_t = vec![7000, 30000],
@@ -34,7 +34,7 @@ pub struct TrainArguments {
     /// Iterations for saving.
     /// It may take few second to run.
     /// If '-qqq' is set, no message will be shown.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "U64", num_args = 0..,
         default_values_t = vec![7000, 30000],
@@ -43,12 +43,12 @@ pub struct TrainArguments {
 
     /// Number of iterations for training.
     /// It is recommended to set a larger value for larger datasets.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(long, value_name = "U64", default_value_t = 30000)]
     pub iterations: u64,
 
     /// Learning rate at initial for position.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "F64",
         default_value_t = TRAINER_CONFIG.learning_rate_positions.start,
@@ -56,7 +56,7 @@ pub struct TrainArguments {
     pub position_lr_init: f64,
 
     /// Learning rate at final for position.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "F64",
         default_value_t = TRAINER_CONFIG.learning_rate_positions.end,
@@ -65,7 +65,7 @@ pub struct TrainArguments {
 
     /// Learning rate maximum step count for position.
     /// It should be equal to the number of iterations.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "U64",
         default_value_t = TRAINER_CONFIG.learning_rate_positions.count,
@@ -73,7 +73,7 @@ pub struct TrainArguments {
     pub position_lr_max_steps: u64,
 
     /// Learning rate for color SH feature.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "F64",
         default_value_t = TRAINER_CONFIG.learning_rate_colors_sh.start,
@@ -81,7 +81,7 @@ pub struct TrainArguments {
     pub feature_lr: f64,
 
     /// Learning rate for opacity.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "F64",
         default_value_t = TRAINER_CONFIG.learning_rate_opacities.start,
@@ -89,7 +89,7 @@ pub struct TrainArguments {
     pub opacity_lr: f64,
 
     /// Learning rate for scaling.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "F64",
         default_value_t = TRAINER_CONFIG.learning_rate_scalings.start,
@@ -97,7 +97,7 @@ pub struct TrainArguments {
     pub scaling_lr: f64,
 
     /// Learning rate for rotation.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "F64",
         default_value_t = TRAINER_CONFIG.learning_rate_rotations.start,
@@ -106,20 +106,20 @@ pub struct TrainArguments {
 
     /// Tolerance for scalings.
     /// It may affect the model quality and size.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(long, value_name = "F64", default_value_t = 0.01)]
     pub percent_dense: f64,
 
     /// Usage of the structural dissimilarity index.
-    /// It may affect the model quality, time, size.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    /// It may affect the model quality, time, and size.
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(long, value_name = "F64", default_value_t = 0.2)]
     pub lambda_dssim: f64,
 
     /// Number of iterations between densification.
     /// It may affect the model quality and size.
     /// It should not be too small.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "U64",
         default_value_t = REFINER_CONFIG.range_densification.step,
@@ -128,7 +128,7 @@ pub struct TrainArguments {
 
     /// The start iteration for densification.
     /// It should not be too small.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "U64",
         default_value_t = REFINER_CONFIG.range_densification.start,
@@ -137,7 +137,7 @@ pub struct TrainArguments {
 
     /// The final iteration for densification.
     /// No action will be performed at and after this iteration.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "U64",
         default_value_t = REFINER_CONFIG.range_densification.end,
@@ -145,8 +145,8 @@ pub struct TrainArguments {
     pub densify_until_iter: u64,
 
     /// Tolerance for view-space positional error.
-    /// It may affect the model quality and size.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    /// It may affect the model quality, time, and size.
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "F64",
         default_value_t = REFINER_CONFIG.threshold_position_2d_grad_norm,
@@ -154,8 +154,8 @@ pub struct TrainArguments {
     pub densify_grad_threshold: f64,
 
     /// Tolerance for opacity.
-    /// It may affect the model quality, time, size.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    /// It may affect the model quality, time, and size.
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "F64",
         default_value_t = REFINER_CONFIG.threshold_opacity,
@@ -164,7 +164,7 @@ pub struct TrainArguments {
 
     /// Number of iterations between increasing color SH feature degree by one.
     /// It may affect the training time.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "U64",
         default_value_t = REFINER_CONFIG.range_increasing_colors_sh_degree_max.step,
@@ -172,7 +172,7 @@ pub struct TrainArguments {
     pub increase_sh_degree_interval: u64,
 
     /// The start iteration for increasing color SH feature degree by one.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "U64",
         default_value_t =

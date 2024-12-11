@@ -260,7 +260,7 @@ impl From<&TrainArguments> for Gaussian3dTrainerConfig {
                     .with_threshold_position_2d_grad_norm(
                         arguments.densify_grad_threshold,
                     )
-                    .with_threshold_scaling((arguments.percent_dense * 6.0).max(0.0)),
+                    .with_threshold_scaling((arguments.percent_dense * 5.0).max(0.0)),
             )
     }
 }

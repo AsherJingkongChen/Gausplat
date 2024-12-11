@@ -6,29 +6,29 @@ use gausplat::renderer::render::gaussian_3d::Gaussian3dRenderOptions;
 
 /// Render for 3DGS.
 #[derive(Clone, Debug, Deserialize, Parser, PartialEq, Serialize)]
-#[command(verbatim_doc_comment, rename_all = "kebab-case", after_help = AFTER_HELP)]
+#[command(verbatim_doc_comment, rename_all = "snake_case", after_help = AFTER_HELP)]
 #[command(next_line_help = true)]
 pub struct RenderArguments {
     /// Iteration for rendering.
     /// It refers to the model saving iteration.
     /// [default: Maximum saving iteration]
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(long, value_name = "U64")]
     pub iteration: Option<u64>,
 
     /// Do not render the training dataset.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(long, default_value_t = false)]
     pub skip_train: bool,
 
     /// Do not render the testing dataset.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(long, default_value_t = false)]
     pub skip_test: bool,
 
     /// Color SH feature degree.
     /// It generally ranges from 0 to 3.
-    #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+    #[arg(verbatim_doc_comment, rename_all = "snake_case")]
     #[arg(
         long, value_name = "U32",
         default_value_t = Gaussian3dRenderOptions::new().colors_sh_degree_max,

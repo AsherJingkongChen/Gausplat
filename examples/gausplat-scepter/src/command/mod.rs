@@ -38,7 +38,7 @@ pub const STYLES: styling::Styles = styling::Styles::styled()
 
 /// Run tasks for Gausplat.
 #[derive(Clone, Debug, Deserialize, Parser, PartialEq, Serialize)]
-#[command(verbatim_doc_comment, rename_all = "kebab-case", after_help = AFTER_HELP)]
+#[command(verbatim_doc_comment, rename_all = "snake_case", after_help = AFTER_HELP)]
 #[command(next_line_help = false, propagate_version = true, version)]
 pub struct GausplatArguments {
     /// Run tasks for the specific model.
@@ -49,23 +49,23 @@ pub struct GausplatArguments {
 
 /// Run tasks for the specific model.
 #[derive(Clone, Debug, Deserialize, PartialEq, Parser, Serialize)]
-#[command(verbatim_doc_comment, rename_all = "kebab-case", after_help = AFTER_HELP)]
+#[command(verbatim_doc_comment, rename_all = "snake_case", after_help = AFTER_HELP)]
 pub enum ModelCommand {
     /// Run tasks for the arguments.
     // #[arg(long, short = 'A', value_name = "Path")]
-    #[command(verbatim_doc_comment, rename_all = "kebab-case", after_help = AFTER_HELP)]
+    #[command(verbatim_doc_comment, rename_all = "snake_case", after_help = AFTER_HELP)]
     #[command(visible_alias = "r")]
     #[serde(rename = "inherit")]
     Run {
         /// Arguments file path.
         /// It is a JSON file containing the entire arguments.
-        #[arg(verbatim_doc_comment, rename_all = "kebab-case")]
+        #[arg(verbatim_doc_comment, rename_all = "snake_case")]
         #[arg(index = 1, value_name = "Path")]
         path: PathBuf,
     },
 
     /// Run tasks for 3DGS.
-    #[command(verbatim_doc_comment, rename_all = "kebab-case", after_help = AFTER_HELP)]
+    #[command(verbatim_doc_comment, rename_all = "snake_case", after_help = AFTER_HELP)]
     #[command(subcommand, name = "3dgs")]
     #[serde(rename = "3dgs")]
     Gaussian3d(Box<Gaussian3dModelCommand>),
