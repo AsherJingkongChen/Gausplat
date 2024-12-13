@@ -42,6 +42,8 @@
 - train
   - Gausplat-3DGS
     - `--densify_grad_threshold 0.0003`
+    - `--feature_lr 0.001`
+    - `--opacity_lr 0.035`
     - `--percent_dense 0.015`
 - truck
   - Gausplat-3DGS
@@ -68,11 +70,11 @@
 
 | Metric   | Method        | drjohnson | playroom | train  | truck  |
 | -------- | ------------- | --------- | -------- | ------ | ------ |
-| SSIM     | Gausplat-3DGS | 0.885     | 0.895    | 0.822  | 0.871  |
-| PSNR     | Gausplat-3DGS | 27.543    | 28.936   | 22.141 | 24.932 |
-| LPIPS    | Gausplat-3DGS | 0.272     | 0.270    | 0.204  | 0.159  |
-| Tr. Time | Gausplat-3DGS | 170       | 135      | 85     | 98     |
-| Md. Size | Gausplat-3DGS | 485       | 306      | 238    | 479    |
+| SSIM     | Gausplat-3DGS | 0.885     | 0.895    | 0.824  | 0.871  |
+| PSNR     | Gausplat-3DGS | 27.543    | 28.936   | 22.256 | 24.932 |
+| LPIPS    | Gausplat-3DGS | 0.272     | 0.270    | 0.200  | 0.159  |
+| Tr. Time | Gausplat-3DGS | 170       | 135      | 80     | 98     |
+| Md. Size | Gausplat-3DGS | 485       | 306      | 215    | 479    |
 
 - **Device (OS)**: NVIDIA GeForce RTX 4060 (Windows 11)
 
