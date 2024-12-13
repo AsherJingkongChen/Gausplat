@@ -28,9 +28,9 @@ jobs:
       - name: Clean docs folder
         run: cargo clean --doc
       - name: Build docs
-        run: cargo doc && RUSTDOCFLAGS="--html-in-header rustdoc-header.html" cargo doc --no-deps
-      - name: Add redirect
-        run: echo '<meta http-equiv="refresh" content="0;url=Gausplat/index.html">' > target/doc/index.html
+        run: RUSTDOCFLAGS="--html-in-header rustdoc-header.md" cargo doc --no-deps
+      # - name: Add redirect
+      #   run: echo '<meta http-equiv="refresh" content="0;url=Gausplat/index.html">' > target/doc/index.html
       - name: Remove lock file
         run: rm target/doc/.lock
       - name: Upload artifact

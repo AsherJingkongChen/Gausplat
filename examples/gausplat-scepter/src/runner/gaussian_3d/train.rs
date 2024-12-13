@@ -242,7 +242,7 @@ impl From<&TrainArguments> for Gaussian3dTrainerConfig {
                     .with_colors_sh_degree_max(arguments.sh_degree),
             )
             .with_range_metric_optimization_fine(RangeOptions::default_with_step(
-                (arguments.lambda_dssim * 2.5).recip().max(1.0) as u64,
+                (0.4 / arguments.lambda_dssim).max(1.0).round() as u64,
             ))
             .with_refiner(
                 RefinerConfig::new()
