@@ -18,39 +18,45 @@
 
 ## Methods
 
-- Gausplat-3DGS [[link]](https://github.com/AsherJingkongChen/Gausplat/tree/c938d57514d07325c2e6ff181237b069225926fc)
+- Gausplat-3DGS [[link]](https://github.com/AsherJingkongChen/Gausplat/tree/5e184f0473adc4894e8d45c23c5b6a43dbc9fa51)
   - **Brief**: Gausplat's 3DGS implementation.
-  - **Commit**: `c938d57514d07325c2e6ff181237b069225926fc`
-- PLACEHOLDER [[link]](#)
-  - **Brief**: PLACEHOLDER.
-  - **Commit**: `PLACEHOLDER`
+  - **Commit**: `5e184f0473adc4894e8d45c23c5b6a43dbc9fa51`
+- Original-3DGS [[link]](https://github.com/AsherJingkongChen/gaussian-splatting/tree/c43d5aca251824862503526b2aa7709ed033de8c)
+  - **Brief**: The original 3D Gaussian splatting implementation.
+  - **Commit**: `c43d5aca251824862503526b2aa7709ed033de8c`
 
 ### Extra configurations on training scenes
 
 - drjohnson
   - Gausplat-3DGS
     - `--densify_grad_threshold 0.00035`
+    - `--percent_dense 0.015`
+  - Original-3DGS
+    - `--densify_grad_threshold 0.00035`
     - `--feature_lr 0.001`
     - `--opacity_lr 0.035`
-    - `--percent_dense 0.015`
 - playroom
   - Gausplat-3DGS
+    - `--percent_dense 0.017`
+  - Original-3DGS
     - `--densify_grad_threshold 0.0003`
     - `--feature_lr 0.001`
     - `--opacity_lr 0.035`
-    - `--percent_dense 0.017`
 - train
   - Gausplat-3DGS
+    - `--percent_dense 0.015`
+  - Original-3DGS
     - `--densify_grad_threshold 0.0003`
     - `--feature_lr 0.001`
     - `--opacity_lr 0.035`
-    - `--percent_dense 0.015`
 - truck
   - Gausplat-3DGS
     - `--densify_grad_threshold 0.00032`
+    - `--percent_dense 0.012`
+  - Original-3DGS
+    - `--densify_grad_threshold 0.00032`
     - `--feature_lr 0.001`
     - `--opacity_lr 0.035`
-    - `--percent_dense 0.012`
 
 ## Metrics
 
@@ -81,19 +87,19 @@
 | Metric   | Method        | drjohnson | playroom | train | truck |
 | -------- | ------------- | --------- | -------- | ----- | ----- |
 | SSIM     | Gausplat-3DGS |           |          |       |       |
-| SSIM     | PLACEHOLDER   |           |          |       |       |
+| SSIM     | Original-3DGS |           |          |       |       |
 | PSNR     | Gausplat-3DGS |           |          |       |       |
-| PSNR     | PLACEHOLDER   |           |          |       |       |
+| PSNR     | Original-3DGS |           |          |       |       |
 | LPIPS    | Gausplat-3DGS |           |          |       |       |
-| LPIPS    | PLACEHOLDER   |           |          |       |       |
+| LPIPS    | Original-3DGS |           |          |       |       |
 | Tr. Time | Gausplat-3DGS |           |          |       |       |
-| Tr. Time | PLACEHOLDER   |           |          |       |       |
+| Tr. Time | Original-3DGS |           |          |       |       |
 | Md. Size | Gausplat-3DGS |           |          |       |       |
-| Md. Size | PLACEHOLDER   |           |          |       |       |
+| Md. Size | Original-3DGS |           |          |       |       |
 
 ### Performance on pretrained scenes
 
-- **Device (OS)**: Apple M2 Pro (macOS 14.6.1)
+- **Device (OS)**: NVIDIA GeForce RTX 4060 (Windows 11)
 
 | Metric | Method        | PLACEHOLDER | PLACEHOLDER | PLACEHOLDER | PLACEHOLDER |
 | ------ | ------------- | ----------- | ----------- | ----------- | ----------- |
