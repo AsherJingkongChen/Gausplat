@@ -32,6 +32,12 @@
    https://github.com/AsherJingkongChen/Gausplat && cd Gausplat
    ```
 
+   If you have already cloned the repository, you can update the submodules.
+
+   ```shell
+   git submodule update --init --recursive --remote
+   ```
+
 3. Build the project.
 
    ```shell
