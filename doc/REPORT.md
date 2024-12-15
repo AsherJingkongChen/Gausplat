@@ -29,34 +29,50 @@
 
 - drjohnson
   - Gausplat-3DGS
-    - `--densify_grad_threshold 0.00038`
-    - `--percent_dense 0.015`
+    ```plaintext
+    --densify_grad_threshold 0.00038 \
+    --percent_dense 0.015
+    ```
   - Original-3DGS
-    - `--densify_grad_threshold 0.00038`
-    - `--feature_lr 0.001`
-    - `--opacity_lr 0.035`
+    ```plaintext
+    --densify_grad_threshold 0.00038 \
+    --feature_lr 0.001 \
+    --opacity_lr 0.035
+    ```
 - playroom
   - Gausplat-3DGS
-    - `--percent_dense 0.017`
+    ```plaintext
+    --percent_dense 0.017
+    ```
   - Original-3DGS
-    - `--densify_grad_threshold 0.0003`
-    - `--feature_lr 0.001`
-    - `--opacity_lr 0.035`
+    ```plaintext
+    --densify_grad_threshold 0.0003 \
+    --feature_lr 0.001 \
+    --opacity_lr 0.035
+    ```
 - train
   - Gausplat-3DGS
-    - `--percent_dense 0.015`
+    ```plaintext
+    --percent_dense 0.015
+    ```
   - Original-3DGS
-    - `--densify_grad_threshold 0.0003`
-    - `--feature_lr 0.001`
-    - `--opacity_lr 0.035`
+    ```plaintext
+    --densify_grad_threshold 0.0003 \
+    --feature_lr 0.001 \
+    --opacity_lr 0.035
+    ```
 - truck
   - Gausplat-3DGS
-    - `--densify_grad_threshold 0.00032`
-    - `--percent_dense 0.012`
+    ```plaintext
+    --densify_grad_threshold 0.00032 \
+    --percent_dense 0.012
+    ```
   - Original-3DGS
-    - `--densify_grad_threshold 0.00032`
-    - `--feature_lr 0.001`
-    - `--opacity_lr 0.035`
+    ```plaintext
+    --densify_grad_threshold 0.00032 \
+    --feature_lr 0.001 \
+    --opacity_lr 0.035
+    ```
 
 ## Metrics
 
@@ -84,18 +100,18 @@
 
 - **Device (OS)**: NVIDIA GeForce RTX 4060 (Windows 11)
 
-| Metric   | Method        | drjohnson | playroom | train | truck |
-| -------- | ------------- | --------- | -------- | ----- | ----- |
-| SSIM     | Gausplat-3DGS |           |          |       |       |
-| SSIM     | Original-3DGS |           |          |       |       |
-| PSNR     | Gausplat-3DGS |           |          |       |       |
-| PSNR     | Original-3DGS |           |          |       |       |
-| LPIPS    | Gausplat-3DGS |           |          |       |       |
-| LPIPS    | Original-3DGS |           |          |       |       |
-| Tr. Time | Gausplat-3DGS |           |          |       |       |
-| Tr. Time | Original-3DGS |           |          |       |       |
-| Md. Size | Gausplat-3DGS |           |          |       |       |
-| Md. Size | Original-3DGS |           |          |       |       |
+| Metric   | Method        | drjohnson | playroom | train  | truck  |
+| -------- | ------------- | --------- | -------- | ------ | ------ |
+| SSIM     | Gausplat-3DGS |           |          |        |        |
+| SSIM     | Original-3DGS |           | 0.909    | 0.802  | 0.876  |
+| PSNR     | Gausplat-3DGS |           |          |        |        |
+| PSNR     | Original-3DGS |           | 30.241   | 21.673 | 25.090 |
+| LPIPS    | Gausplat-3DGS |           |          |        |        |
+| LPIPS    | Original-3DGS |           | 0.247    | 0.227  | 0.160  |
+| Tr. Time | Gausplat-3DGS |           |          |        |        |
+| Tr. Time | Original-3DGS |           | 51       | 30     | 38     |
+| Md. Size | Gausplat-3DGS |           |          |        |        |
+| Md. Size | Original-3DGS |           | 296      | 146    | 278    |
 
 ### Performance on pretrained scenes
 
