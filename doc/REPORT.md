@@ -29,10 +29,10 @@
 
 - drjohnson
   - Gausplat-3DGS
-    - `--densify_grad_threshold 0.00035`
+    - `--densify_grad_threshold 0.00038`
     - `--percent_dense 0.015`
   - Original-3DGS
-    - `--densify_grad_threshold 0.00035`
+    - `--densify_grad_threshold 0.00038`
     - `--feature_lr 0.001`
     - `--opacity_lr 0.035`
 - playroom
@@ -76,11 +76,11 @@
 
 | Metric   | Method        | drjohnson | playroom | train  | truck  |
 | -------- | ------------- | --------- | -------- | ------ | ------ |
-| SSIM     | Gausplat-3DGS | 0.885     | 0.895    | 0.824  | 0.871  |
-| PSNR     | Gausplat-3DGS | 27.543    | 28.936   | 22.256 | 24.932 |
-| LPIPS    | Gausplat-3DGS | 0.272     | 0.270    | 0.200  | 0.159  |
-| Tr. Time | Gausplat-3DGS | 170       | 135      | 80     | 98     |
-| Md. Size | Gausplat-3DGS | 485       | 306      | 215    | 479    |
+| SSIM     | Gausplat-3DGS | 0.884     | 0.895    | 0.824  | 0.871  |
+| PSNR     | Gausplat-3DGS | 27.411    | 28.936   | 22.256 | 24.932 |
+| LPIPS    | Gausplat-3DGS | 0.274     | 0.270    | 0.200  | 0.159  |
+| Tr. Time | Gausplat-3DGS | 161       | 135      | 80     | 98     |
+| Md. Size | Gausplat-3DGS | 432       | 306      | 215    | 479    |
 
 - **Device (OS)**: NVIDIA GeForce RTX 4060 (Windows 11)
 
