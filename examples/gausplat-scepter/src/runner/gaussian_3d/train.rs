@@ -102,6 +102,7 @@ impl Runner for TrainRunner {
         let can_show_details = quiet < 1;
         let can_show_test = quiet < 2;
         let can_show_save = quiet < 3;
+        let can_show_size = quiet < 3;
 
         // Specifying the progress bar
 
@@ -138,7 +139,7 @@ impl Runner for TrainRunner {
 
                 // Specifying the parameters
                 let iteration = self.trainer.iteration;
-                if can_show_save {
+                if can_show_size {
                     size = self.scene.size_readable();
                 }
 
