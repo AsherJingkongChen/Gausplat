@@ -3,7 +3,6 @@
 ## Datasets
 
 - Tanks & Temples and Deep Blending (COLMAP) [[link]](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/datasets/input/tandt_db.zip)
-  <!-- - drjohnson -->
   - playroom
   - train
   - truck
@@ -18,27 +17,15 @@
 
 ## Methods
 
-- Gausplat-3DGS [[link]](https://github.com/AsherJingkongChen/Gausplat/tree/5e184f0473adc4894e8d45c23c5b6a43dbc9fa51)
+- Gausplat-3DGS [[link]](https://github.com/AsherJingkongChen/Gausplat/tree/7b297e777039dd689b372b31b5e980cf0b384ae2)
   - **Brief**: Gausplat's 3DGS implementation.
-  - **Commit**: `5e184f0473adc4894e8d45c23c5b6a43dbc9fa51`
+  - **Commit**: `7b297e777039dd689b372b31b5e980cf0b384ae2`
 - Original-3DGS [[link]](https://github.com/AsherJingkongChen/gaussian-splatting/tree/c43d5aca251824862503526b2aa7709ed033de8c)
   - **Brief**: The original 3D Gaussian splatting implementation.
   - **Commit**: `c43d5aca251824862503526b2aa7709ed033de8c`
 
 ### Extra configurations on training scenes
 
-<!-- - drjohnson
-  - Gausplat-3DGS
-    ```plaintext
-    --densify_grad_threshold 0.00038 \
-    --percent_dense 0.015
-    ```
-  - Original-3DGS
-    ```plaintext
-    --densify_grad_threshold 0.00038 \
-    --feature_lr 0.001 \
-    --opacity_lr 0.035
-    ``` -->
 - playroom
   - Gausplat-3DGS
     ```plaintext
@@ -92,11 +79,11 @@
 
 | Metric   | Method        | playroom | train  | truck  |
 | -------- | ------------- | -------- | ------ | ------ |
-| SSIM     | Gausplat-3DGS | 0.895    | 0.824  | 0.871  |
-| PSNR     | Gausplat-3DGS | 28.936   | 22.256 | 24.932 |
-| LPIPS    | Gausplat-3DGS | 0.270    | 0.200  | 0.159  |
-| Tr. Time | Gausplat-3DGS | 135      | 80     | 98     |
-| Md. Size | Gausplat-3DGS | 306      | 215    | 479    |
+| SSIM     | Gausplat-3DGS | 0.895    | 0.826  | 0.871  |
+| PSNR     | Gausplat-3DGS | 29.036   | 22.346 | 24.854 |
+| LPIPS    | Gausplat-3DGS | 0.269    | 0.199  | 0.159  |
+| Tr. Time | Gausplat-3DGS | 142      | 85     | 103    |
+| Md. Size | Gausplat-3DGS | 304      | 218    | 478    |
 
 - **Device (OS)**: NVIDIA GeForce RTX 4060 (Windows 11)
 
