@@ -7,24 +7,26 @@
   - train
   - truck
 - Pretrained models [[link]](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/datasets/pretrained/models.zip)
-  - PLACEHOLDER
-  - PLACEHOLDER
-  - PLACEHOLDER
-  - PLACEHOLDER
+  - drjohnson
+  - playroom
+  - train
+  - truck
 
 > [!WARNING]
 > The above datasets are excluded from the Gausplat project. They are only used for evaluation purposes.
 
 ## Methods
 
-- Gausplat-3DGS [[link]](https://github.com/AsherJingkongChen/Gausplat/tree/7b297e777039dd689b372b31b5e980cf0b384ae2)
+- Gausplat-3DGS [[link]](https://github.com/AsherJingkongChen/Gausplat/tree/0343281d2fd853aec1eaab5c1a3c7154a8a09398)
   - **Brief**: Gausplat's 3DGS implementation.
-  - **Commit**: `7b297e777039dd689b372b31b5e980cf0b384ae2`
+  - **Commit**: `0343281d2fd853aec1eaab5c1a3c7154a8a09398`
 - Original-3DGS [[link]](https://github.com/AsherJingkongChen/gaussian-splatting/tree/c43d5aca251824862503526b2aa7709ed033de8c)
   - **Brief**: The original 3D Gaussian splatting implementation.
   - **Commit**: `c43d5aca251824862503526b2aa7709ed033de8c`
 
 ### Extra configurations on training scenes
+
+The following configurations are extended from their default values.
 
 - playroom
   - Gausplat-3DGS
@@ -51,12 +53,12 @@
 - truck
   - Gausplat-3DGS
     ```plaintext
-    --densify_grad_threshold 0.00032 \
+    --densify_grad_threshold 0.00035 \
     --percent_dense 0.012
     ```
   - Original-3DGS
     ```plaintext
-    --densify_grad_threshold 0.00032 \
+    --densify_grad_threshold 0.00035 \
     --feature_lr 0.001 \
     --opacity_lr 0.035
     ```
@@ -77,41 +79,43 @@
 
 - **Device (OS)**: Apple M2 Pro (macOS 14.6.1)
 
-| Metric   | Method        | playroom | train  | truck  |
-| -------- | ------------- | -------- | ------ | ------ |
-| SSIM     | Gausplat-3DGS | 0.895    | 0.826  | 0.871  |
-| PSNR     | Gausplat-3DGS | 29.036   | 22.346 | 24.854 |
-| LPIPS    | Gausplat-3DGS | 0.269    | 0.199  | 0.159  |
-| Tr. Time | Gausplat-3DGS | 142      | 85     | 103    |
-| Md. Size | Gausplat-3DGS | 304      | 218    | 478    |
+  | Metric   | Method        | playroom | train  | truck  |
+  | -------- | ------------- | -------- | ------ | ------ |
+  | SSIM     | Gausplat-3DGS | 0.895    | 0.825  | 0.871  |
+  | PSNR     | Gausplat-3DGS | 29.183   | 22.279 | 24.943 |
+  | LPIPS    | Gausplat-3DGS | 0.269    | 0.199  | 0.161  |
+  | Tr. Time | Gausplat-3DGS | 143      | 85     | 96     |
+  | Md. Size | Gausplat-3DGS | 306      | 217    | 409    |
 
 - **Device (OS)**: NVIDIA GeForce RTX 4060 (Windows 11)
 
-| Metric   | Method        | playroom | train  | truck  |
-| -------- | ------------- | -------- | ------ | ------ |
-| SSIM     | Gausplat-3DGS |          |        |        |
-| SSIM     | Original-3DGS | 0.909    | 0.802  | 0.876  |
-| PSNR     | Gausplat-3DGS |          |        |        |
-| PSNR     | Original-3DGS | 30.241   | 21.673 | 25.090 |
-| LPIPS    | Gausplat-3DGS |          |        |        |
-| LPIPS    | Original-3DGS | 0.247    | 0.227  | 0.160  |
-| Tr. Time | Gausplat-3DGS |          |        |        |
-| Tr. Time | Original-3DGS | 51       | 30     | 38     |
-| Md. Size | Gausplat-3DGS |          |        |        |
-| Md. Size | Original-3DGS | 296      | 146    | 278    |
+  | Metric   | Method        | playroom | train  | truck |
+  | -------- | ------------- | -------- | ------ | ----- |
+  | SSIM     | Gausplat-3DGS | 0.894    | 0.826  |       |
+  | SSIM     | Original-3DGS | 0.909    | 0.802  |       |
+  | PSNR     | Gausplat-3DGS | 28.934   | 22.485 |       |
+  | PSNR     | Original-3DGS | 30.241   | 21.673 |       |
+  | LPIPS    | Gausplat-3DGS | 0.270    | 0.198  |       |
+  | LPIPS    | Original-3DGS | 0.247    | 0.227  |       |
+  | Tr. Time | Gausplat-3DGS | 65       | 42     |       |
+  | Tr. Time | Original-3DGS | 51       | 30     |       |
+  | Md. Size | Gausplat-3DGS | 305      | 218    |       |
+  | Md. Size | Original-3DGS | 296      | 146    |       |
+
+<!-- TODO: Update the metrics of truck (--densify_grad_threshold 0.00035) -->
 
 ### Performance on pretrained scenes
 
 - **Device (OS)**: NVIDIA GeForce RTX 4060 (Windows 11)
 
-| Metric | Method        | PLACEHOLDER | PLACEHOLDER | PLACEHOLDER | PLACEHOLDER |
-| ------ | ------------- | ----------- | ----------- | ----------- | ----------- |
-| SSIM   | Gausplat-3DGS |             |             |             |             |
-| SSIM   | PLACEHOLDER   |             |             |             |             |
-| PSNR   | Gausplat-3DGS |             |             |             |             |
-| PSNR   | PLACEHOLDER   |             |             |             |             |
-| LPIPS  | Gausplat-3DGS |             |             |             |             |
-| LPIPS  | PLACEHOLDER   |             |             |             |             |
+  | Metric | Method        | drjohnson | playroom | train   | truck   |
+  | ------ | ------------- | --------- | -------- | ------- | ------- |
+  | SSIM   | Gausplat-3DGS | 0.8986    | 0.9059   | 0.8062  | 0.8747  |
+  | SSIM   | Original-3DGS | 0.8988    | 0.9070   | 0.8076  | 0.8756  |
+  | PSNR   | Gausplat-3DGS | 28.9673   | 30.0659  | 21.6904 | 24.9632 |
+  | PSNR   | Original-3DGS | 28.9749   | 30.0673  | 21.7869 | 24.9926 |
+  | LPIPS  | Gausplat-3DGS | 0.2460    | 0.2404   | 0.2142  | 0.1519  |
+  | LPIPS  | Original-3DGS | 0.2444    | 0.2398   | 0.2143  | 0.1513  |
 
 ## Conclusion
 
