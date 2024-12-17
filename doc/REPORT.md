@@ -3,6 +3,7 @@
 ## Datasets
 
 - Tanks & Temples and Deep Blending (COLMAP) [[link]](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/datasets/input/tandt_db.zip)
+  - drjohnson
   - playroom
   - train
   - truck
@@ -65,13 +66,15 @@ The following configurations are extended from their default values.
 
 ## Metrics
 
-| Name         | Description                                |
-| ------------ | ------------------------------------------ |
-| SSIM (⬆)     | Mean Structural Similarity Index.          |
-| PSNR (⬆)     | Peak Signal-to-Noise Ratio.                |
-| LPIPS (⬇)    | Learned Perceptual Image Patch Similarity. |
-| Tr. Time (⬇) | Duration of training in minutes.           |
-| Md. Size (⬇) | Disk size of the model file in megabytes.  |
+- Some metrics are computed using Inria's script [[link]](https://github.com/graphdeco-inria/gaussian-splatting/blob/2fedfba8c7f9f559ac03cbc11358c2cc7d631ac1/metrics.py).
+
+  | Name         | Description                                |
+  | ------------ | ------------------------------------------ |
+  | SSIM (↑)     | Mean Structural Similarity Index.          |
+  | PSNR (↑)     | Peak Signal-to-Noise Ratio.                |
+  | LPIPS (↓)    | Learned Perceptual Image Patch Similarity. |
+  | Tr. Time (↓) | Duration of training in minutes.           |
+  | Md. Size (↓) | Disk size of the model file in megabytes.  |
 
 ## Evaluation
 
@@ -89,20 +92,18 @@ The following configurations are extended from their default values.
 
 - **Device (OS)**: NVIDIA GeForce RTX 4060 (Windows 11)
 
-  | Metric   | Method        | playroom | train  | truck |
-  | -------- | ------------- | -------- | ------ | ----- |
-  | SSIM     | Gausplat-3DGS | 0.894    | 0.826  |       |
-  | SSIM     | Original-3DGS | 0.909    | 0.802  |       |
-  | PSNR     | Gausplat-3DGS | 28.934   | 22.485 |       |
-  | PSNR     | Original-3DGS | 30.241   | 21.673 |       |
-  | LPIPS    | Gausplat-3DGS | 0.270    | 0.198  |       |
-  | LPIPS    | Original-3DGS | 0.247    | 0.227  |       |
-  | Tr. Time | Gausplat-3DGS | 65       | 42     |       |
-  | Tr. Time | Original-3DGS | 51       | 30     |       |
-  | Md. Size | Gausplat-3DGS | 305      | 218    |       |
-  | Md. Size | Original-3DGS | 296      | 146    |       |
-
-<!-- TODO: Update the metrics of truck (--densify_grad_threshold 0.00035) -->
+  | Metric   | Method        | playroom | train  | truck  |
+  | -------- | ------------- | -------- | ------ | ------ |
+  | SSIM     | Gausplat-3DGS | 0.894    | 0.826  |        |
+  | SSIM     | Original-3DGS | 0.909    | 0.802  | 0.874  |
+  | PSNR     | Gausplat-3DGS | 28.934   | 22.485 |        |
+  | PSNR     | Original-3DGS | 30.241   | 21.673 | 25.042 |
+  | LPIPS    | Gausplat-3DGS | 0.270    | 0.198  |        |
+  | LPIPS    | Original-3DGS | 0.247    | 0.227  | 0.164  |
+  | Tr. Time | Gausplat-3DGS | 65       | 42     |        |
+  | Tr. Time | Original-3DGS | 51       | 30     | 32     |
+  | Md. Size | Gausplat-3DGS | 305      | 218    |        |
+  | Md. Size | Original-3DGS | 296      | 146    | 246    |
 
 ### Performance on pretrained scenes
 
@@ -119,4 +120,8 @@ The following configurations are extended from their default values.
 
 ## Conclusion
 
-The algorithm is naive. We still have room for improvement in performance and quality.
+On pretrained scenes, Gausplat-3DGS produces very close results to Original-3DGS. The lowest difference of SSIM is `0.0002` on the drjohnson scene.
+
+On training scenes, Gausplat-3DGS is slower than Original-3DGS. The training time ratio that is the closest to `1` is `0.784` on the playroom scene.
+
+However, the algorithm is naive. We still have room for improvement in performance and quality.
