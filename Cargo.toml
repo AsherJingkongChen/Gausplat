@@ -19,11 +19,11 @@ gausplat-loader = {path = "crates/gausplat-loader"}
 gausplat-renderer = {path = "crates/gausplat-renderer"}
 gausplat-trainer = {path = "crates/gausplat-trainer"}
 
-burn = {git = "https://github.com/tracel-ai/burn", rev = "ebd7649edc22e5304765f97725ceb386be20dd90", default-features = false}
-burn-jit = {git = "https://github.com/tracel-ai/burn", rev = "ebd7649edc22e5304765f97725ceb386be20dd90", default-features = false}
-burn-ndarray = {git = "https://github.com/tracel-ai/burn", rev = "ebd7649edc22e5304765f97725ceb386be20dd90", default-features = false}
-burn-tensor = {git = "https://github.com/tracel-ai/burn", rev = "ebd7649edc22e5304765f97725ceb386be20dd90", default-features = false}
-bytemuck = {version = "1.20.0", default-features = false}
+burn = {git = "https://github.com/tracel-ai/burn", rev = "da8de562b0f67869c8a8c629b8535f938fd317f9", default-features = false}
+burn-jit = {git = "https://github.com/tracel-ai/burn", rev = "da8de562b0f67869c8a8c629b8535f938fd317f9", default-features = false}
+burn-ndarray = {git = "https://github.com/tracel-ai/burn", rev = "da8de562b0f67869c8a8c629b8535f938fd317f9", default-features = false}
+burn-tensor = {git = "https://github.com/tracel-ai/burn", rev = "da8de562b0f67869c8a8c629b8535f938fd317f9", default-features = false}
+bytemuck = {version = "1.21.0", default-features = false}
 byteorder = {version = "1.5.0", default-features = false}
 clap = {version = "4.5.23", default-features = false}
 color-eyre = {version = "0.6.3", default-features = false}
@@ -49,7 +49,7 @@ thiserror = {version = "1.0.69", default-features = false}
 walkdir = {version = "2.5.0", default-features = false}
 
 [patch.crates-io]
-wgpu = {git = "https://github.com/AsherJingkongChen/wgpu", rev = "a8073bb507c334b9f3ddea068d922c3896b56d60"}
+wgpu = {git = "https://github.com/AsherJingkongChen/wgpu", rev = "b51332b93932155c32f42b43c71d3a4cf945559e"}
 
 [profile.dev]
 opt-level = 1
